@@ -1,0 +1,37 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "SSIBench: a Self-Supervised Imaging Benchmark",
+    "section": "",
+    "text": "SSIBench is a modular benchmark for learning to solve imaging inverse problems without ground truth, applied to accelerated MRI reconstruction.\n\nAndrew Wang, Steven McDonagh, Mike Davies\n   \n\n\nSkip to…\n\nOverview\nHow to…\n\n…use the benchmark\n\n…contribute a method\n\n…use a custom dataset, model, forward operator/acquisition strategy, metric\n\n\nBenchmark results\nTraining script step-by-step\n\n\n\n\nSSIBench is a modular benchmark for learning to solve imaging inverse problems without ground truth, applied to accelerated MRI reconstruction. We contribute:\n\nA comprehensive review of state-of-the-art self-supervised feedforward methods for inverse problems;\nWell-documented implementations of all benchmarked methods in the open-source DeepInverse library, and a modular benchmark site enabling ML researchers to evaluate new methods or on custom setups and datasets;\nBenchmarking experiments on MRI, across multiple realistic, general scenarios;\nA new method, multi-operator equivariant imaging (MO-EI).\n\nIn our benchmark design, we benchmark the loss functions, while keeping constant the model \\(f_\\theta\\). TODO\n\n\n\n\n\n\nFirst setup your environment:\n\nCreate a python environment:\npython -m venv venv\nsource venv/Scripts/activate\nClone the benchmark repo:\ngit clone https://github.com/ssibench/ssibench.git\nInstall DeepInverse bash     pip install deepinv\n\nThen run train.py for each loss, where --loss is one of mc, …:\npython train.py --loss ...\nTo evaluate, use the same script train.py with 0 epochs and loading a checkpoint. We provide one pretrained model for quick eval for TODO\npython train.py --epochs 0 --ckpt \"...pt\"\n\n\n\n\nAdd the code for your loss in the format:\nclass YourOwnLoss(deepinv.loss.Loss):\n    def forward(self, x_net, y, x=None, model, physics, **kwargs):\n        \"\"\"\n        :param torch.Tensor x: ground truth, should be unused!\n        ...\n        \"\"\"\nAdd your loss function as an option in train.py (hint: search “Add your custom loss here!”)\nOpen a GitHub pull request to contribute your loss! (TODO new PR link) (how to?) (TODO how to link)\n\n\n\n\nThe modular benchmark lets you easily train and evaluate the benchmarked methods on your own setup.\n\nThe custom dataset should have the form:\nclass ...\nReplace … with your own, then train/evaluate using the script as in How to use the benchmark.\n\n\n\n\n\nThe custom model should have the form:\nclass ...\nReplace … with your own, then train/evaluate using the script as in How to use the benchmark.\n\n\n\n\n\nTo use an alternative physics, use a different DeepInverse physics or a custom one of the form:\nclass ...\nReplace … with your own, then train/evaluate using the script as in How to use the benchmark.\n\n\n\n\n\nThe custom metric should have the form:\nclass ...\nReplace … with your own, then train/evaluate using the script as in How to use the benchmark.\n\n\n\n\n\n\nTODO\n\n\n\n\nstep by step python …"
+  },
+  {
+    "objectID": "index.html#overview",
+    "href": "index.html#overview",
+    "title": "SSIBench: a Self-Supervised Imaging Benchmark",
+    "section": "",
+    "text": "SSIBench is a modular benchmark for learning to solve imaging inverse problems without ground truth, applied to accelerated MRI reconstruction. We contribute:\n\nA comprehensive review of state-of-the-art self-supervised feedforward methods for inverse problems;\nWell-documented implementations of all benchmarked methods in the open-source DeepInverse library, and a modular benchmark site enabling ML researchers to evaluate new methods or on custom setups and datasets;\nBenchmarking experiments on MRI, across multiple realistic, general scenarios;\nA new method, multi-operator equivariant imaging (MO-EI).\n\nIn our benchmark design, we benchmark the loss functions, while keeping constant the model \\(f_\\theta\\). TODO"
+  },
+  {
+    "objectID": "index.html#how-to",
+    "href": "index.html#how-to",
+    "title": "SSIBench: a Self-Supervised Imaging Benchmark",
+    "section": "",
+    "text": "First setup your environment:\n\nCreate a python environment:\npython -m venv venv\nsource venv/Scripts/activate\nClone the benchmark repo:\ngit clone https://github.com/ssibench/ssibench.git\nInstall DeepInverse bash     pip install deepinv\n\nThen run train.py for each loss, where --loss is one of mc, …:\npython train.py --loss ...\nTo evaluate, use the same script train.py with 0 epochs and loading a checkpoint. We provide one pretrained model for quick eval for TODO\npython train.py --epochs 0 --ckpt \"...pt\"\n\n\n\n\nAdd the code for your loss in the format:\nclass YourOwnLoss(deepinv.loss.Loss):\n    def forward(self, x_net, y, x=None, model, physics, **kwargs):\n        \"\"\"\n        :param torch.Tensor x: ground truth, should be unused!\n        ...\n        \"\"\"\nAdd your loss function as an option in train.py (hint: search “Add your custom loss here!”)\nOpen a GitHub pull request to contribute your loss! (TODO new PR link) (how to?) (TODO how to link)\n\n\n\n\nThe modular benchmark lets you easily train and evaluate the benchmarked methods on your own setup.\n\nThe custom dataset should have the form:\nclass ...\nReplace … with your own, then train/evaluate using the script as in How to use the benchmark.\n\n\n\n\n\nThe custom model should have the form:\nclass ...\nReplace … with your own, then train/evaluate using the script as in How to use the benchmark.\n\n\n\n\n\nTo use an alternative physics, use a different DeepInverse physics or a custom one of the form:\nclass ...\nReplace … with your own, then train/evaluate using the script as in How to use the benchmark.\n\n\n\n\n\nThe custom metric should have the form:\nclass ...\nReplace … with your own, then train/evaluate using the script as in How to use the benchmark."
+  },
+  {
+    "objectID": "index.html#benchmark-results",
+    "href": "index.html#benchmark-results",
+    "title": "SSIBench: a Self-Supervised Imaging Benchmark",
+    "section": "",
+    "text": "TODO"
+  },
+  {
+    "objectID": "index.html#training-script-step-by-step",
+    "href": "index.html#training-script-step-by-step",
+    "title": "SSIBench: a Self-Supervised Imaging Benchmark",
+    "section": "",
+    "text": "step by step python …"
+  }
+]

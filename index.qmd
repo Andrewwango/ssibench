@@ -1,0 +1,5 @@
+---
+format: html
+---
+
+{{< include README.md >}}
