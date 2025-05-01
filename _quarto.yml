@@ -1,0 +1,15 @@
+project:
+  type: website
+  output-dir: docs
+  render:
+    - index.qmd
+
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    theme: default
+    title-block: false
+
+website:
+  title: "SSIBench: a Self-Supervised Imaging Benchmark"
