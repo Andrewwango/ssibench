@@ -5,8 +5,8 @@
 [Andrew Wang](https://andrewwango.github.io), [Steven McDonagh](https://smcdonagh.github.io/), [Mike Davies](https://eng.ed.ac.uk/about/people/professor-michael-e-davies)
 
 [![arXiv](https://img.shields.io/badge/arXiv-2502.14009-b31b1b.svg)](https://arxiv.org/abs/2502.14009)
-[![Code](https://img.shields.io/badge/GitHub-Code-blue.svg)](https://github.com/ssibench/ssibench)
-[![Benchmark](https://img.shields.io/badge/Web-Benchmark-ff69b4.svg)](https://ssibench.github.io/)
+[![Code](https://img.shields.io/badge/GitHub-Code-blue.svg)](https://github.com/Andrewwango/ssibench)
+[![Benchmark](https://img.shields.io/badge/Web-Benchmark-ff69b4.svg)](https://andrewwango.github.io/ssibench)
 [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1lSoR1vX-imvnJKcTvGS951ISlZjVRQfE?usp=sharing)
 
 ---
@@ -30,7 +30,7 @@ Skip to...
 SSIBench is a modular benchmark for learning to solve imaging inverse problems without ground truth, applied to accelerated MRI reconstruction. We contribute:
 
 1. A comprehensive review of state-of-the-art self-supervised feedforward methods for inverse problems;
-2. Well-documented implementations of all benchmarked methods in the open-source [DeepInverse](https://deepinv.github.io/) library, and a modular [benchmark site](https://ssibench.github.io/) enabling ML researchers to evaluate new methods or on custom setups and datasets;
+2. Well-documented implementations of all benchmarked methods in the open-source [DeepInverse](https://deepinv.github.io/) library, and a modular [benchmark site](https://andrewwango.github.io/ssibench) enabling ML researchers to evaluate new methods or on custom setups and datasets;
 3. Benchmarking experiments on MRI, across multiple realistic, general scenarios;
 4. A new method, multi-operator equivariant imaging (MO-EI).
 
@@ -49,20 +49,20 @@ source venv/Scripts/activate
 ```
 2. Clone the benchmark repo:
 ```bash
-git clone https://github.com/ssibench/ssibench.git
+git clone https://github.com/Andrewwango/ssibench.git
 ```
 3. Install [DeepInverse](https://deepinv.github.io/)
 ```bash
 pip install deepinv
 ```
 
-Then run [`train.py`](https://github.com/ssibench/ssibench/blob/main/train.py) for your chosen loss, where `--loss` is the loss function (`mc`, `ei` etc.), and `--physics` is the physics (see [`train.py`](https://github.com/ssibench/ssibench/blob/main/train.py) for options):
+Then run [`train.py`](https://github.com/Andrewwango/ssibench/blob/main/train.py) for your chosen loss, where `--loss` is the loss function (`mc`, `ei` etc.), and `--physics` is the physics (see [`train.py`](https://github.com/Andrewwango/ssibench/blob/main/train.py) for options):
 
 ```bash
 python train.py --loss ... --physics ...
 ```
 
-To evaluate, use the same script [`train.py`](https://github.com/ssibench/ssibench/blob/main/train.py) with 0 epochs and loading a checkpoint. We provide one pretrained model for quick eval for TODO
+To evaluate, use the same script [`train.py`](https://github.com/Andrewwango/ssibench/blob/main/train.py) with 0 epochs and loading a checkpoint. We provide one pretrained model for quick eval for TODO
 
 ```bash
 python train.py --epochs 0 --ckpt "demo_mo-ei.pt"
@@ -87,8 +87,8 @@ class YourOwnLoss(deepinv.loss.Loss):
         loss_calc = ...
         return loss_calc
 ```
-2. Add your loss function as an option in [`train.py`](https://github.com/ssibench/ssibench/blob/main/train.py) (hint: search _"Add your custom loss here!"_)
-3. Open a [GitHub pull request](https://github.com/ssibench/ssibench/pulls) to contribute your loss! (hint: [how to open a PR in GitHub](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request))
+2. Add your loss function as an option in [`train.py`](https://github.com/Andrewwango/ssibench/blob/main/train.py) (hint: search _"Add your custom loss here!"_)
+3. Open a [GitHub pull request](https://github.com/Andrewwango/ssibench/pulls) to contribute your loss! (hint: [how to open a PR in GitHub](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request))
 
 
 ### How to use a custom dataset
@@ -105,7 +105,7 @@ class YourOwnDataset(torch.utils.data.Dataset):
         return     x,     y, params # If ground truth x provided for evaluation
         return torch.nan, y, params # If ground truth does not exist
 ```
-2. Replace `dataset = ...` in [`train.py`](https://github.com/ssibench/ssibench/blob/main/train.py) with your own, then train/evaluate using the script as in [How to use the benchmark](#how-to-use-the-benchmark).
+2. Replace `dataset = ...` in [`train.py`](https://github.com/Andrewwango/ssibench/blob/main/train.py) with your own, then train/evaluate using the script as in [How to use the benchmark](#how-to-use-the-benchmark).
 
 ### How to use a custom model
 
@@ -121,7 +121,7 @@ class YourOwnModel(deepinv.models.Reconstructor):
         x_net = ...
         return x_net
 ```
-2. Replace `model = ...` in [`train.py`](https://github.com/ssibench/ssibench/blob/main/train.py) with your own, then train/evaluate using the script as in [How to use the benchmark](#how-to-use-the-benchmark).
+2. Replace `model = ...` in [`train.py`](https://github.com/Andrewwango/ssibench/blob/main/train.py) with your own, then train/evaluate using the script as in [How to use the benchmark](#how-to-use-the-benchmark).
 
 ### How to use a custom forward operator/acquisition strategy
 
@@ -136,7 +136,7 @@ class YourOwnPhysics(deepinv.physics.Physics):
         x_hat = ...
         return x_hat
 ```
-2. Replace `physics = ...` [`train.py`](https://github.com/ssibench/ssibench/blob/main/train.py) with your own, then train/evaluate using the script as in [How to use the benchmark](#how-to-use-the-benchmark).
+2. Replace `physics = ...` [`train.py`](https://github.com/Andrewwango/ssibench/blob/main/train.py) with your own, then train/evaluate using the script as in [How to use the benchmark](#how-to-use-the-benchmark).
 
 ### How to use a custom metric
 
@@ -150,7 +150,7 @@ class YourOwnMetric(dinv.loss.metric.Metric):
     ):
         return ...
 ```
-2. Replace `metrics = ...` in [`train.py`](https://github.com/ssibench/ssibench/blob/main/train.py) with your own, then train/evaluate using the script as in [How to use the benchmark](#how-to-use-the-benchmark).
+2. Replace `metrics = ...` in [`train.py`](https://github.com/Andrewwango/ssibench/blob/main/train.py) with your own, then train/evaluate using the script as in [How to use the benchmark](#how-to-use-the-benchmark).
 
 ---
 
@@ -235,7 +235,7 @@ train_dataloader = torch.utils.data.DataLoader(train_dataset, batch_size=batch_s
 test_dataloader  = torch.utils.data.DataLoader(test_dataset,  batch_size=batch_size)
 ```
 
-Define loss function (see [`train.py`](https://github.com/ssibench/ssibench/blob/main/train.py) for all options)
+Define loss function (see [`train.py`](https://github.com/Andrewwango/ssibench/blob/main/train.py) for all options)
 
 ```{python}
 match args.loss:

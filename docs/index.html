@@ -149,7 +149,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>SSIBench is a modular benchmark for learning to solve imaging inverse problems without ground truth, applied to accelerated MRI reconstruction.</p>
 </blockquote>
 <p><a href="https://andrewwango.github.io">Andrew Wang</a>, <a href="https://smcdonagh.github.io/">Steven McDonagh</a>, <a href="https://eng.ed.ac.uk/about/people/professor-michael-e-davies">Mike Davies</a></p>
-<p><a href="https://arxiv.org/abs/2502.14009"><img src="https://img.shields.io/badge/arXiv-2502.14009-b31b1b.svg" class="img-fluid" alt="arXiv"></a> <a href="https://github.com/ssibench/ssibench"><img src="https://img.shields.io/badge/GitHub-Code-blue.svg" class="img-fluid" alt="Code"></a> <a href="https://ssibench.github.io/"><img src="https://img.shields.io/badge/Web-Benchmark-ff69b4.svg" class="img-fluid" alt="Benchmark"></a> <a href="https://colab.research.google.com/drive/1lSoR1vX-imvnJKcTvGS951ISlZjVRQfE?usp=sharing"><img src="https://colab.research.google.com/assets/colab-badge.svg" class="img-fluid" alt="Colab"></a></p>
+<p><a href="https://arxiv.org/abs/2502.14009"><img src="https://img.shields.io/badge/arXiv-2502.14009-b31b1b.svg" class="img-fluid" alt="arXiv"></a> <a href="https://github.com/Andrewwango/ssibench"><img src="https://img.shields.io/badge/GitHub-Code-blue.svg" class="img-fluid" alt="Code"></a> <a href="https://andrewwango.github.io/ssibench"><img src="https://img.shields.io/badge/Web-Benchmark-ff69b4.svg" class="img-fluid" alt="Benchmark"></a> <a href="https://colab.research.google.com/drive/1lSoR1vX-imvnJKcTvGS951ISlZjVRQfE?usp=sharing"><img src="https://colab.research.google.com/assets/colab-badge.svg" class="img-fluid" alt="Colab"></a></p>
 <hr>
 <p><img src="img/ssibench.svg" class="img-fluid"></p>
 <p>Skip to…</p>
@@ -173,7 +173,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>SSIBench is a modular benchmark for learning to solve imaging inverse problems without ground truth, applied to accelerated MRI reconstruction. We contribute:</p>
 <ol type="1">
 <li>A comprehensive review of state-of-the-art self-supervised feedforward methods for inverse problems;</li>
-<li>Well-documented implementations of all benchmarked methods in the open-source <a href="https://deepinv.github.io/">DeepInverse</a> library, and a modular <a href="https://ssibench.github.io/">benchmark site</a> enabling ML researchers to evaluate new methods or on custom setups and datasets;</li>
+<li>Well-documented implementations of all benchmarked methods in the open-source <a href="https://deepinv.github.io/">DeepInverse</a> library, and a modular <a href="https://andrewwango.github.io/ssibench">benchmark site</a> enabling ML researchers to evaluate new methods or on custom setups and datasets;</li>
 <li>Benchmarking experiments on MRI, across multiple realistic, general scenarios;</li>
 <li>A new method, multi-operator equivariant imaging (MO-EI).</li>
 </ol>
@@ -192,14 +192,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <ol start="2" type="1">
 <li>Clone the benchmark repo:</li>
 </ol>
-<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/ssibench/ssibench.git</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/Andrewwango/ssibench.git</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <ol start="3" type="1">
 <li>Install <a href="https://deepinv.github.io/">DeepInverse</a></li>
 </ol>
 <div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install deepinv</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Then run <a href="https://github.com/ssibench/ssibench/blob/main/train.py"><code>train.py</code></a> for your chosen loss, where <code>--loss</code> is the loss function (<code>mc</code>, <code>ei</code> etc.), and <code>--physics</code> is the physics (see <a href="https://github.com/ssibench/ssibench/blob/main/train.py"><code>train.py</code></a> for options):</p>
+<p>Then run <a href="https://github.com/Andrewwango/ssibench/blob/main/train.py"><code>train.py</code></a> for your chosen loss, where <code>--loss</code> is the loss function (<code>mc</code>, <code>ei</code> etc.), and <code>--physics</code> is the physics (see <a href="https://github.com/Andrewwango/ssibench/blob/main/train.py"><code>train.py</code></a> for options):</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> train.py <span class="at">--loss</span> ... <span class="at">--physics</span> ...</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>To evaluate, use the same script <a href="https://github.com/ssibench/ssibench/blob/main/train.py"><code>train.py</code></a> with 0 epochs and loading a checkpoint. We provide one pretrained model for quick eval for TODO</p>
+<p>To evaluate, use the same script <a href="https://github.com/Andrewwango/ssibench/blob/main/train.py"><code>train.py</code></a> with 0 epochs and loading a checkpoint. We provide one pretrained model for quick eval for TODO</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> train.py <span class="at">--epochs</span> 0 <span class="at">--ckpt</span> <span class="st">"demo_mo-ei.pt"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Notation: in our benchmark, we compare the <code>loss</code> functions <span class="math inline">\(\mathcal{L}(\ldots)\)</span>, while keeping constant the <code>model</code> <span class="math inline">\(f_\theta\)</span>, forward operator <code>physics</code> <span class="math inline">\(A\)</span>, and data <span class="math inline">\(y\)</span>.</p>
 </section>
@@ -221,8 +221,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>        loss_calc <span class="op">=</span> ...</span>
 <span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> loss_calc</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <ol start="2" type="1">
-<li>Add your loss function as an option in <a href="https://github.com/ssibench/ssibench/blob/main/train.py"><code>train.py</code></a> (hint: search <em>“Add your custom loss here!”</em>)</li>
-<li>Open a <a href="https://github.com/ssibench/ssibench/pulls">GitHub pull request</a> to contribute your loss! (hint: <a href="https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request">how to open a PR in GitHub</a>)</li>
+<li>Add your loss function as an option in <a href="https://github.com/Andrewwango/ssibench/blob/main/train.py"><code>train.py</code></a> (hint: search <em>“Add your custom loss here!”</em>)</li>
+<li>Open a <a href="https://github.com/Andrewwango/ssibench/pulls">GitHub pull request</a> to contribute your loss! (hint: <a href="https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request">how to open a PR in GitHub</a>)</li>
 </ol>
 </section>
 <section id="how-to-use-a-custom-dataset" class="level3">
@@ -239,7 +239,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span>     x,     y, params <span class="co"># If ground truth x provided for evaluation</span></span>
 <span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> torch.nan, y, params <span class="co"># If ground truth does not exist</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <ol start="2" type="1">
-<li>Replace <code>dataset = ...</code> in <a href="https://github.com/ssibench/ssibench/blob/main/train.py"><code>train.py</code></a> with your own, then train/evaluate using the script as in <a href="#how-to-use-the-benchmark">How to use the benchmark</a>.</li>
+<li>Replace <code>dataset = ...</code> in <a href="https://github.com/Andrewwango/ssibench/blob/main/train.py"><code>train.py</code></a> with your own, then train/evaluate using the script as in <a href="#how-to-use-the-benchmark">How to use the benchmark</a>.</li>
 </ol>
 </section>
 <section id="how-to-use-a-custom-model" class="level3">
@@ -257,7 +257,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>        x_net <span class="op">=</span> ...</span>
 <span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> x_net</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <ol start="2" type="1">
-<li>Replace <code>model = ...</code> in <a href="https://github.com/ssibench/ssibench/blob/main/train.py"><code>train.py</code></a> with your own, then train/evaluate using the script as in <a href="#how-to-use-the-benchmark">How to use the benchmark</a>.</li>
+<li>Replace <code>model = ...</code> in <a href="https://github.com/Andrewwango/ssibench/blob/main/train.py"><code>train.py</code></a> with your own, then train/evaluate using the script as in <a href="#how-to-use-the-benchmark">How to use the benchmark</a>.</li>
 </ol>
 </section>
 <section id="how-to-use-a-custom-forward-operatoracquisition-strategy" class="level3">
@@ -274,7 +274,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>        x_hat <span class="op">=</span> ...</span>
 <span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> x_hat</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <ol start="2" type="1">
-<li>Replace <code>physics = ...</code> <a href="https://github.com/ssibench/ssibench/blob/main/train.py"><code>train.py</code></a> with your own, then train/evaluate using the script as in <a href="#how-to-use-the-benchmark">How to use the benchmark</a>.</li>
+<li>Replace <code>physics = ...</code> <a href="https://github.com/Andrewwango/ssibench/blob/main/train.py"><code>train.py</code></a> with your own, then train/evaluate using the script as in <a href="#how-to-use-the-benchmark">How to use the benchmark</a>.</li>
 </ol>
 </section>
 <section id="how-to-use-a-custom-metric" class="level3">
@@ -290,7 +290,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>    ):</span>
 <span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> ...</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <ol start="2" type="1">
-<li>Replace <code>metrics = ...</code> in <a href="https://github.com/ssibench/ssibench/blob/main/train.py"><code>train.py</code></a> with your own, then train/evaluate using the script as in <a href="#how-to-use-the-benchmark">How to use the benchmark</a>.</li>
+<li>Replace <code>metrics = ...</code> in <a href="https://github.com/Andrewwango/ssibench/blob/main/train.py"><code>train.py</code></a> with your own, then train/evaluate using the script as in <a href="#how-to-use-the-benchmark">How to use the benchmark</a>.</li>
 </ol>
 <hr>
 </section>
@@ -368,7 +368,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a>train_dataloader <span class="op">=</span> torch.utils.data.DataLoader(train_dataset, batch_size<span class="op">=</span>batch_size, shuffle<span class="op">=</span><span class="va">True</span>, generator<span class="op">=</span>rng_cpu)</span>
 <span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a>test_dataloader  <span class="op">=</span> torch.utils.data.DataLoader(test_dataset,  batch_size<span class="op">=</span>batch_size)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Define loss function (see <a href="https://github.com/ssibench/ssibench/blob/main/train.py"><code>train.py</code></a> for all options)</p>
+<p>Define loss function (see <a href="https://github.com/Andrewwango/ssibench/blob/main/train.py"><code>train.py</code></a> for all options)</p>
 <div class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="cf">match</span> args.loss:</span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">case</span> <span class="st">"mc"</span>:</span>
