@@ -56,6 +56,7 @@ git clone https://github.com/Andrewwango/ssibench.git
 ```bash
 pip install deepinv
 ```
+4. Prepare your [fastMRI](https://fastmri.med.nyu.edu/) data using the [below instructions](#dataset-preparation-instructions).
 
 Then run [`train.py`](https://github.com/Andrewwango/ssibench/blob/main/train.py) for your chosen loss, where `--loss` is the loss function (`mc`, `ei` etc.), and `--physics` is the physics (see [`train.py`](https://github.com/Andrewwango/ssibench/blob/main/train.py) for options):
 
@@ -63,10 +64,10 @@ Then run [`train.py`](https://github.com/Andrewwango/ssibench/blob/main/train.py
 python train.py --loss ... --physics ...
 ```
 
-To evaluate, use the same script [`train.py`](https://github.com/Andrewwango/ssibench/blob/main/train.py) with 0 epochs and loading a checkpoint. We provide one pretrained model for quick eval for TODO
+To evaluate, use the same script [`train.py`](https://github.com/Andrewwango/ssibench/blob/main/train.py) with 0 epochs and loading a checkpoint. We provide one pretrained model for quick eval ([download here](https://huggingface.co/Andrewwango/ssibench/blob/main/demo_mo-ei.pth.tar)):
 
 ```bash
-python train.py --epochs 0 --ckpt "demo_mo-ei.pt"
+python train.py --epochs 0 --ckpt "demo_mo-ei.pth.tar"
 ```
 
 Notation: in our benchmark, we compare the `loss` functions $\mathcal{L}(\ldots)$, while keeping constant the `model` $f_\theta$, forward operator `physics` $A$, and data $y$.
@@ -157,7 +158,22 @@ class YourOwnMetric(deepinv.loss.metric.Metric):
 
 ## Leaderboard
 
-TODO
+The following is reproduced from Table 2 from [the paper](https://arxiv.org/abs/2502.14009).
+
+|     **Loss**    | **PSNR**| **SSIM**|
+|-------------|-----|-----|
+| Zero-filled |27.67|.7862|
+|      MC     |27.66|.7861|
+|     SSDU    |27.98|.7485|
+|Noise2Inverse|28.42|.7853|
+|Weighted-SSDU|29.93|.8355|
+| Adversarial |18.52|.4732|
+|     UAIR    |14.00|.3715|
+|    VORTEX   |27.75|.7898|
+|      EI     |30.26|.8523|
+|     MOI     |30.29|.8651|
+|    MO-EI    |32.14|.8846|
+| (Supervised)|33.15|.9032|
 
 ---
 
@@ -314,4 +330,16 @@ print(trainer.test(test_dataloader))
 
 # Dataset preparation instructions
 
-TODO
+To prepare the fastMRI dataset `fastmri_brain_singlecoil.pt` used in [`train.py`](https://github.com/Andrewwango/ssibench/blob/main/train.py) for the benchmark experiments, we make use of the [fastMRI wrapper in DeepInverse](https://deepinv.github.io/deepinv/api/stubs/deepinv.datasets.FastMRISliceDataset.html).
+
+1. Download [fastMRI](https://fastmri.med.nyu.edu/) brain dataset batch 0: `brain_multicoil_train_batch_0` (~98.5 GB)
+2. Generate an efficient dataset of the middle slices (note that this is deterministic, and the random masks & noise are simulated in [`train.py`](https://github.com/Andrewwango/ssibench/blob/main/train.py)):
+
+```{python}
+dataset = deepinv.datasets.FastMRISliceDataset(
+    "/path/to/fastmri/brain/multicoil_train", 
+    slice_index="middle"
+)
+
+dataset.save_simple_dataset("data/fastmri_brain_singlecoil.pt")
+```

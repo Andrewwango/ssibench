@@ -120,8 +120,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#how-to-use-a-custom-forward-operatoracquisition-strategy" id="toc-how-to-use-a-custom-forward-operatoracquisition-strategy" class="nav-link" data-scroll-target="#how-to-use-a-custom-forward-operatoracquisition-strategy">How to use a custom forward operator/acquisition strategy</a></li>
   <li><a href="#how-to-use-a-custom-metric" id="toc-how-to-use-a-custom-metric" class="nav-link" data-scroll-target="#how-to-use-a-custom-metric">How to use a custom metric</a></li>
   </ul></li>
-  <li><a href="#benchmark-results" id="toc-benchmark-results" class="nav-link" data-scroll-target="#benchmark-results">Benchmark results</a></li>
+  <li><a href="#leaderboard" id="toc-leaderboard" class="nav-link" data-scroll-target="#leaderboard">Leaderboard</a></li>
   <li><a href="#training-script-step-by-step" id="toc-training-script-step-by-step" class="nav-link" data-scroll-target="#training-script-step-by-step">Training script step-by-step</a></li>
+  <li><a href="#dataset-preparation-instructions" id="toc-dataset-preparation-instructions" class="nav-link" data-scroll-target="#dataset-preparation-instructions">Dataset preparation instructions</a></li>
   </ul>
 </nav>
     </div>
@@ -149,7 +150,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>SSIBench is a modular benchmark for learning to solve imaging inverse problems without ground truth, applied to accelerated MRI reconstruction.</p>
 </blockquote>
 <p><a href="https://andrewwango.github.io">Andrew Wang</a>, <a href="https://smcdonagh.github.io/">Steven McDonagh</a>, <a href="https://eng.ed.ac.uk/about/people/professor-michael-e-davies">Mike Davies</a></p>
-<p><a href="https://arxiv.org/abs/2502.14009"><img src="https://img.shields.io/badge/arXiv-2502.14009-b31b1b.svg" class="img-fluid" alt="arXiv"></a> <a href="https://github.com/Andrewwango/ssibench"><img src="https://img.shields.io/badge/GitHub-Code-blue.svg" class="img-fluid" alt="Code"></a> <a href="https://andrewwango.github.io/ssibench"><img src="https://img.shields.io/badge/Web-Benchmark-ff69b4.svg" class="img-fluid" alt="Benchmark"></a> <a href="https://colab.research.google.com/drive/1lSoR1vX-imvnJKcTvGS951ISlZjVRQfE?usp=sharing"><img src="https://colab.research.google.com/assets/colab-badge.svg" class="img-fluid" alt="Colab"></a></p>
+<p><a href="https://arxiv.org/abs/2502.14009"><img src="https://img.shields.io/badge/arXiv-2502.14009-b31b1b.svg" class="img-fluid" alt="arXiv"></a> <a href="https://github.com/Andrewwango/ssibench"><img src="https://img.shields.io/badge/GitHub-Code-blue.svg" class="img-fluid" alt="Code"></a> <a href="https://andrewwango.github.io/ssibench"><img src="https://img.shields.io/badge/Web-Benchmark-ff69b4.svg" class="img-fluid" alt="Benchmark"></a> <a href="https://colab.research.google.com/drive/15CFQ7Lp9Xk-J3ltJ6kWHIs5tk8Z4VBYD?usp=sharing"><img src="https://colab.research.google.com/assets/colab-badge.svg" class="img-fluid" alt="Colab"></a></p>
 <hr>
 <p><img src="img/ssibench.svg" class="img-fluid"></p>
 <p>Skip to…</p>
@@ -164,8 +165,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><a href="#how-to-use-a-custom-dataset">…use a custom dataset</a>, <a href="#how-to-use-a-custom-model">model</a>, <a href="#how-to-use-a-custom-forward-operatoracquisition-strategy">forward operator/acquisition strategy</a>, <a href="#how-to-use-a-custom-metric">metric</a><br>
 </li>
 </ol></li>
-<li><a href="#benchmark-results">Benchmark results</a></li>
+<li><a href="#leaderboard">Leaderboard</a></li>
 <li><a href="#training-script-step-by-step">Training script step-by-step</a></li>
+<li><a href="#dataset-preparation-instructions">Dataset preparation instructions</a></li>
 </ol>
 <hr>
 <section id="overview" class="level2">
@@ -197,10 +199,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Install <a href="https://deepinv.github.io/">DeepInverse</a></li>
 </ol>
 <div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install deepinv</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="4" type="1">
+<li>Prepare your <a href="https://fastmri.med.nyu.edu/">fastMRI</a> data using the <a href="#dataset-preparation-instructions">below instructions</a>.</li>
+</ol>
 <p>Then run <a href="https://github.com/Andrewwango/ssibench/blob/main/train.py"><code>train.py</code></a> for your chosen loss, where <code>--loss</code> is the loss function (<code>mc</code>, <code>ei</code> etc.), and <code>--physics</code> is the physics (see <a href="https://github.com/Andrewwango/ssibench/blob/main/train.py"><code>train.py</code></a> for options):</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> train.py <span class="at">--loss</span> ... <span class="at">--physics</span> ...</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>To evaluate, use the same script <a href="https://github.com/Andrewwango/ssibench/blob/main/train.py"><code>train.py</code></a> with 0 epochs and loading a checkpoint. We provide one pretrained model for quick eval for TODO</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> train.py <span class="at">--epochs</span> 0 <span class="at">--ckpt</span> <span class="st">"demo_mo-ei.pt"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>To evaluate, use the same script <a href="https://github.com/Andrewwango/ssibench/blob/main/train.py"><code>train.py</code></a> with 0 epochs and loading a checkpoint. We provide one pretrained model for quick eval (<a href="https://huggingface.co/Andrewwango/ssibench/blob/main/demo_mo-ei.pth.tar">download here</a>):</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> train.py <span class="at">--epochs</span> 0 <span class="at">--ckpt</span> <span class="st">"demo_mo-ei.pth.tar"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Notation: in our benchmark, we compare the <code>loss</code> functions <span class="math inline">\(\mathcal{L}(\ldots)\)</span>, while keeping constant the <code>model</code> <span class="math inline">\(f_\theta\)</span>, forward operator <code>physics</code> <span class="math inline">\(A\)</span>, and data <span class="math inline">\(y\)</span>.</p>
 </section>
 <section id="how-to-contribute-a-method" class="level3">
@@ -213,16 +218,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>, </span>
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>        x_net: torch.Tensor,    <span class="co"># Reconstruction i.e. model output</span></span>
 <span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>        y: torch.Tensor,        <span class="co"># Measurement data e.g. k-space in MRI</span></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>        x: torch.Tensor <span class="op">=</span> <span class="va">None</span>, <span class="co"># Ground truth, must be unused!</span></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>        model: deepinv.models.Reconstructor, <span class="co"># Reconstruction model $f_\theta$</span></span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>        physics: deepinv.physics.Physics,    <span class="co"># Forward operator physics $A$</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>        model: deepinv.models.Reconstructor, <span class="co"># Reconstruction model $f_\theta$</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>        physics: deepinv.physics.Physics,    <span class="co"># Forward operator physics $A$</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>        x: torch.Tensor <span class="op">=</span> <span class="va">None</span>, <span class="co"># Ground truth, must be unused!</span></span>
 <span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>        <span class="op">**</span>kwargs</span>
 <span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>    ):</span>
 <span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>        loss_calc <span class="op">=</span> ...</span>
 <span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> loss_calc</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <ol start="2" type="1">
 <li>Add your loss function as an option in <a href="https://github.com/Andrewwango/ssibench/blob/main/train.py"><code>train.py</code></a> (hint: search <em>“Add your custom loss here!”</em>)</li>
-<li>Open a <a href="https://github.com/Andrewwango/ssibench/pulls">GitHub pull request</a> to contribute your loss! (hint: <a href="https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request">how to open a PR in GitHub</a>)</li>
+<li>Open a <a href="https://github.com/Andrewwango/ssibench/pulls">GitHub pull request</a> to contribute your loss! (hint: <a href="https://github.com/Andrewwango/ssibench/pull/1">see example here</a>; hint: <a href="https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request">how to open a PR in GitHub</a>)</li>
 </ol>
 </section>
 <section id="how-to-use-a-custom-dataset" class="level3">
@@ -282,7 +287,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <ol type="1">
 <li>The custom metric should have the form (see <a href="https://deepinv.github.io/deepinv/user_guide/training/metric.html">DeepInverse docs</a> for details):</li>
 </ol>
-<div class="sourceCode" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> YourOwnMetric(dinv.loss.metric.Metric):</span>
+<div class="sourceCode" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> YourOwnMetric(deepinv.loss.metric.Metric):</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> metric(</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>, </span>
 <span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>        x_net: torch.Tensor, <span class="co"># Reconstruction i.e. model output</span></span>
@@ -295,16 +300,87 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <hr>
 </section>
 </section>
-<section id="benchmark-results" class="level2">
-<h2 class="anchored" data-anchor-id="benchmark-results">Benchmark results</h2>
-<p>TODO</p>
+<section id="leaderboard" class="level2">
+<h2 class="anchored" data-anchor-id="leaderboard">Leaderboard</h2>
+<p>The following is reproduced from Table 2 from <a href="https://arxiv.org/abs/2502.14009">the paper</a>.</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th><strong>Loss</strong></th>
+<th><strong>PSNR</strong></th>
+<th><strong>SSIM</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Zero-filled</td>
+<td>27.67</td>
+<td>.7862</td>
+</tr>
+<tr class="even">
+<td>MC</td>
+<td>27.66</td>
+<td>.7861</td>
+</tr>
+<tr class="odd">
+<td>SSDU</td>
+<td>27.98</td>
+<td>.7485</td>
+</tr>
+<tr class="even">
+<td>Noise2Inverse</td>
+<td>28.42</td>
+<td>.7853</td>
+</tr>
+<tr class="odd">
+<td>Weighted-SSDU</td>
+<td>29.93</td>
+<td>.8355</td>
+</tr>
+<tr class="even">
+<td>Adversarial</td>
+<td>18.52</td>
+<td>.4732</td>
+</tr>
+<tr class="odd">
+<td>UAIR</td>
+<td>14.00</td>
+<td>.3715</td>
+</tr>
+<tr class="even">
+<td>VORTEX</td>
+<td>27.75</td>
+<td>.7898</td>
+</tr>
+<tr class="odd">
+<td>EI</td>
+<td>30.26</td>
+<td>.8523</td>
+</tr>
+<tr class="even">
+<td>MOI</td>
+<td>30.29</td>
+<td>.8651</td>
+</tr>
+<tr class="odd">
+<td>MO-EI</td>
+<td>32.14</td>
+<td>.8846</td>
+</tr>
+<tr class="even">
+<td>(Supervised)</td>
+<td>33.15</td>
+<td>.9032</td>
+</tr>
+</tbody>
+</table>
 <hr>
 </section>
 <section id="training-script-step-by-step" class="level2">
 <h2 class="anchored" data-anchor-id="training-script-step-by-step">Training script step-by-step</h2>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><a href="https://colab.research.google.com/drive/1lSoR1vX-imvnJKcTvGS951ISlZjVRQfE?usp=sharing"><img src="https://colab.research.google.com/assets/colab-badge.svg" class="img-fluid figure-img"></a></p>
+<p><a href="https://colab.research.google.com/drive/15CFQ7Lp9Xk-J3ltJ6kWHIs5tk8Z4VBYD?usp=sharing"><img src="https://colab.research.google.com/assets/colab-badge.svg" class="img-fluid figure-img"></a></p>
 </figure>
 </div>
 <p>The training script makes extensive use of modular training framework provided by <a href="https://deepinv.github.io">DeepInverse</a>.</p>
@@ -322,7 +398,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>acceleration <span class="op">=</span> <span class="dv">6</span></span>
 <span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>batch_size <span class="op">=</span> <span class="dv">4</span></span>
 <span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>lr <span class="op">=</span> <span class="fl">1e-3</span></span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>img_size <span class="op">=</span> (<span class="dv">320</span>, <span class="dv">320</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>img_size <span class="op">=</span> (<span class="dv">320</span>, <span class="dv">320</span>)</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> args: <span class="co"># Command line args from train.py</span></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>    physics <span class="op">=</span> <span class="st">"mri"</span></span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>    epochs <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>    loss <span class="op">=</span> <span class="st">"mc"</span></span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>    ckpt <span class="op">=</span> <span class="va">None</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Define MRI physics <span class="math inline">\(A\)</span> and mask generator <span class="math inline">\(M\)</span> according to scenario</p>
 <div class="cell" data-execution_count="3">
@@ -429,6 +511,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>trainer.train()</span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(trainer.test(test_dataloader))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="dataset-preparation-instructions" class="level1">
+<h1>Dataset preparation instructions</h1>
+<p>To prepare the fastMRI dataset <code>fastmri_brain_singlecoil.pt</code> used in <a href="https://github.com/Andrewwango/ssibench/blob/main/train.py"><code>train.py</code></a> for the benchmark experiments, we make use of the <a href="https://deepinv.github.io/deepinv/api/stubs/deepinv.datasets.FastMRISliceDataset.html">fastMRI wrapper in DeepInverse</a>.</p>
+<ol type="1">
+<li>Download <a href="https://fastmri.med.nyu.edu/">fastMRI</a> brain dataset batch 0: <code>brain_multicoil_train_batch_0</code> (~98.5 GB)</li>
+<li>Generate an efficient dataset of the middle slices (note that this is deterministic, and the random masks &amp; noise are simulated in <a href="https://github.com/Andrewwango/ssibench/blob/main/train.py"><code>train.py</code></a>):</li>
+</ol>
+<div class="cell" data-execution_count="12">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>dataset <span class="op">=</span> deepinv.datasets.FastMRISliceDataset(</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"/path/to/fastmri/brain/multicoil_train"</span>, </span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>    slice_index<span class="op">=</span><span class="st">"middle"</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>dataset.save_simple_dataset(<span class="st">"data/fastmri_brain_singlecoil.pt"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 
 
