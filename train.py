@@ -6,7 +6,11 @@ parser = ArgumentParser()
 parser.add_argument("--epochs", type=int, default=0)  # Number of training epochs
 parser.add_argument("--ckpt", type=str, default=None) # Pretrained model path
 parser.add_argument("--loss", type=str, default="mc", choices=(
-    ...
+    "mc", "sup", 
+    "ssdu", "noise2inverse", "weighted-ssdu",
+    "adversarial", "uair",
+    "vortex", "ei", "moi", "mo-ei",
+    "ensure", "noise2recon-ssdu", "robust-ssdu", "robust-ei", "robust-mo-ei",
     # Add your custom loss here!
     "custom_loss",
 ))
