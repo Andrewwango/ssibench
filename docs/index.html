@@ -175,20 +175,42 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h3 class="anchored" data-anchor-id="how-to-use-the-benchmark">How to use the benchmark</h3>
 <p>First setup your environment:</p>
 <ol type="1">
-<li>Create a python environment: <code>bash     python -m venv venv     source venv/Scripts/activate</code></li>
-<li>Clone the benchmark repo: <code>bash     git clone https://github.com/ssibench/ssibench.git</code></li>
-<li>Install <a href="https://deepinv.github.io/">DeepInverse</a> <code>bash     pip install deepinv</code></li>
+<li>Create a python environment:</li>
 </ol>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> venv venv</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> venv/Scripts/activate</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="2" type="1">
+<li>Clone the benchmark repo:</li>
+</ol>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/ssibench/ssibench.git</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="3" type="1">
+<li>Install <a href="https://deepinv.github.io/">DeepInverse</a></li>
+</ol>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install deepinv</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Then run <a href="https://github.com/ssibench/ssibench/blob/main/train.py"><code>train.py</code></a> for your chosen loss, where <code>--loss</code> is one of <code>mc</code>, …:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> train.py <span class="at">--loss</span> ...</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> train.py <span class="at">--loss</span> ...</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>To evaluate, use the same script <a href="https://github.com/ssibench/ssibench/blob/main/train.py"><code>train.py</code></a> with 0 epochs and loading a checkpoint. We provide one pretrained model for quick eval for TODO</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> train.py <span class="at">--epochs</span> 0 <span class="at">--ckpt</span> <span class="st">"...pt"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> train.py <span class="at">--epochs</span> 0 <span class="at">--ckpt</span> <span class="st">"...pt"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Notation: in our benchmark, we compare the <code>loss</code> functions <span class="math inline">\(\mathcal{L}(\ldots)\)</span>, while keeping constant the <code>model</code> <span class="math inline">\(f_\theta\)</span>, forward operator <code>physics</code> <span class="math inline">\(A\)</span>, and data <span class="math inline">\(y\)</span>.</p>
 </section>
 <section id="how-to-contribute-a-method" class="level3">
 <h3 class="anchored" data-anchor-id="how-to-contribute-a-method">How to contribute a method</h3>
 <ol type="1">
-<li>Add the code for your loss in the format: <code>python     class YourOwnLoss(deepinv.loss.Loss):        def forward(             self,              x_net: torch.Tensor,    # Reconstruction i.e. model output             y: torch.Tensor,        # Measurement data e.g. k-space in MRI             x: torch.Tensor = None, # Ground truth, must be unused!             model: deepinv.models.Reconstructor, # Reconstruction model $f_\theta$             physics: deepinv.physics.Physics,    # Forward operator physics $A$             **kwargs         ):             loss_calc = ...             return loss_calc</code></li>
+<li>Add the code for your loss in the format:</li>
+</ol>
+<div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> YourOwnLoss(deepinv.loss.Loss):</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> forward(</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>, </span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>        x_net: torch.Tensor,    <span class="co"># Reconstruction i.e. model output</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>        y: torch.Tensor,        <span class="co"># Measurement data e.g. k-space in MRI</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>        x: torch.Tensor <span class="op">=</span> <span class="va">None</span>, <span class="co"># Ground truth, must be unused!</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>        model: deepinv.models.Reconstructor, <span class="co"># Reconstruction model $f_\theta$</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>        physics: deepinv.physics.Physics,    <span class="co"># Forward operator physics $A$</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>        <span class="op">**</span>kwargs</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>    ):</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>        loss_calc <span class="op">=</span> ...</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> loss_calc</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="2" type="1">
 <li>Add your loss function as an option in <a href="https://github.com/ssibench/ssibench/blob/main/train.py"><code>train.py</code></a> (hint: search <em>“Add your custom loss here!”</em>)</li>
 <li>Open a <a href="https://github.com/ssibench/ssibench/pulls">GitHub pull request</a> to contribute your loss! (hint: <a href="https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request">how to open a PR in GitHub</a>)</li>
 </ol>
@@ -197,32 +219,67 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h3 class="anchored" data-anchor-id="how-to-use-a-custom-dataset">How to use a custom dataset</h3>
 <p>Our modular benchmark lets you easily train and evaluate the benchmarked methods on your own setup.</p>
 <ol type="1">
-<li>The custom dataset should have the form (see <a href="https://deepinv.github.io/deepinv/api/stubs/deepinv.Trainer.html#deepinv.Trainer:~:text=of%20the%20following-,options,-%3A">DeepInverse docs</a> for details): <code>python     class YourOwnDataset(torch.utils.data.Dataset):         def __getitem__(self, idx: int):             ...             # y = measurement data             # params = dict of physics data-dependent parameters, e.g. acceleration mask in MRI             return     x,     y, params # If ground truth x provided for evaluation             return torch.nan, y, params # If ground truth does not exist</code></li>
+<li>The custom dataset should have the form (see <a href="https://deepinv.github.io/deepinv/api/stubs/deepinv.Trainer.html#deepinv.Trainer:~:text=of%20the%20following-,options,-%3A">DeepInverse docs</a> for details):</li>
+</ol>
+<div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> YourOwnDataset(torch.utils.data.Dataset):</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__getitem__</span>(<span class="va">self</span>, idx: <span class="bu">int</span>):</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>        ...</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>        <span class="co"># y = measurement data</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>        <span class="co"># params = dict of physics data-dependent parameters, e.g. acceleration mask in MRI</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span>     x,     y, params <span class="co"># If ground truth x provided for evaluation</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> torch.nan, y, params <span class="co"># If ground truth does not exist</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="2" type="1">
 <li>Replace <code>dataset = ...</code> in <a href="https://github.com/ssibench/ssibench/blob/main/train.py"><code>train.py</code></a> with your own, then train/evaluate using the script as in <a href="#how-to-use-the-benchmark">How to use the benchmark</a>.</li>
 </ol>
 </section>
 <section id="how-to-use-a-custom-model" class="level3">
 <h3 class="anchored" data-anchor-id="how-to-use-a-custom-model">How to use a custom model</h3>
 <ol type="1">
-<li>The custom model should have the form (see <a href="https://deepinv.github.io/deepinv/user_guide/reconstruction/introduction.html">DeepInverse guide</a> for details): <code>python     class YourOwnModel(deepinv.models.Reconstructor):         def forward(             self,              y: torch.Tensor,             physics: deepinv.physics.Physics,             **kwargs         ):             x_net = ...             return x_net</code></li>
+<li>The custom model should have the form (see <a href="https://deepinv.github.io/deepinv/user_guide/reconstruction/introduction.html">DeepInverse guide</a> for details):</li>
+</ol>
+<div class="sourceCode" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> YourOwnModel(deepinv.models.Reconstructor):</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> forward(</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>, </span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>        y: torch.Tensor,</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>        physics: deepinv.physics.Physics,</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>        <span class="op">**</span>kwargs</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>    ):</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>        x_net <span class="op">=</span> ...</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> x_net</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="2" type="1">
 <li>Replace <code>model = ...</code> in <a href="https://github.com/ssibench/ssibench/blob/main/train.py"><code>train.py</code></a> with your own, then train/evaluate using the script as in <a href="#how-to-use-the-benchmark">How to use the benchmark</a>.</li>
 </ol>
 </section>
 <section id="how-to-use-a-custom-forward-operatoracquisition-strategy" class="level3">
 <h3 class="anchored" data-anchor-id="how-to-use-a-custom-forward-operatoracquisition-strategy">How to use a custom forward operator/acquisition strategy</h3>
 <ol type="1">
-<li><p>To use an alternative physics, you can use a different off-the-shelf <a href="https://deepinv.github.io/deepinv/user_guide/physics/physics.html">DeepInverse physics</a> or a custom one of the form (see <a href="https://deepinv.github.io/deepinv/user_guide/physics/defining.html">DeepInverse guide</a> on creating custom physics): ```python class YourOwnPhysics(deepinv.physics.Physics): def A(self, x: torch.Tensor, **kwargs): y = … return y</p>
-<pre><code> def A_adjoint(self, y: torch.Tensor, **kwargs):
-     x_hat = ...
-     return x_hat</code></pre>
-<p>```</p></li>
-<li><p>Replace <code>physics = ...</code> <a href="https://github.com/ssibench/ssibench/blob/main/train.py"><code>train.py</code></a> with your own, then train/evaluate using the script as in <a href="#how-to-use-the-benchmark">How to use the benchmark</a>.</p></li>
+<li>To use an alternative physics, you can use a different off-the-shelf <a href="https://deepinv.github.io/deepinv/user_guide/physics/physics.html">DeepInverse physics</a> or a custom one of the form (see <a href="https://deepinv.github.io/deepinv/user_guide/physics/defining.html">DeepInverse guide</a> on creating custom physics):</li>
+</ol>
+<div class="sourceCode" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> YourOwnPhysics(deepinv.physics.Physics):</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> A(<span class="va">self</span>, x: torch.Tensor, <span class="op">**</span>kwargs):</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>        y <span class="op">=</span> ...</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> y</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> A_adjoint(<span class="va">self</span>, y: torch.Tensor, <span class="op">**</span>kwargs):</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>        x_hat <span class="op">=</span> ...</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> x_hat</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="2" type="1">
+<li>Replace <code>physics = ...</code> <a href="https://github.com/ssibench/ssibench/blob/main/train.py"><code>train.py</code></a> with your own, then train/evaluate using the script as in <a href="#how-to-use-the-benchmark">How to use the benchmark</a>.</li>
 </ol>
 </section>
 <section id="how-to-use-a-custom-metric" class="level3">
 <h3 class="anchored" data-anchor-id="how-to-use-a-custom-metric">How to use a custom metric</h3>
 <ol type="1">
-<li>The custom metric should have the form (see <a href="https://deepinv.github.io/deepinv/user_guide/training/metric.html">DeepInverse docs</a> for details): <code>python     class YourOwnMetric(dinv.loss.metric.Metric):         def metric(             self,              x_net: torch.Tensor, # Reconstruction i.e. model output             x: torch.Tensor,     # Ground-truth for evaluation         ):             return ...</code></li>
+<li>The custom metric should have the form (see <a href="https://deepinv.github.io/deepinv/user_guide/training/metric.html">DeepInverse docs</a> for details):</li>
+</ol>
+<div class="sourceCode" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> YourOwnMetric(dinv.loss.metric.Metric):</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> metric(</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>, </span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>        x_net: torch.Tensor, <span class="co"># Reconstruction i.e. model output</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>        x: torch.Tensor,     <span class="co"># Ground-truth for evaluation</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>    ):</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> ...</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="2" type="1">
 <li>Replace <code>metric = ...</code> in <a href="https://github.com/ssibench/ssibench/blob/main/train.py"><code>train.py</code></a> with your own, then train/evaluate using the script as in <a href="#how-to-use-the-benchmark">How to use the benchmark</a>.</li>
 </ol>
 <hr>
