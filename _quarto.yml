@@ -14,3 +14,6 @@ format:
 
 website:
   title: "SSIBench: a Self-Supervised Imaging Benchmark"
+
+execute:
+  eval: false

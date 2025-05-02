@@ -110,9 +110,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#ssibench-a-self-supervised-imaging-benchmark" id="toc-ssibench-a-self-supervised-imaging-benchmark" class="nav-link active" data-scroll-target="#ssibench-a-self-supervised-imaging-benchmark">SSIBench: a Self-Supervised Imaging Benchmark</a>
-  <ul class="collapse">
-  <li><a href="#overview" id="toc-overview" class="nav-link" data-scroll-target="#overview">Overview</a></li>
+  <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview">Overview</a></li>
   <li><a href="#how-to" id="toc-how-to" class="nav-link" data-scroll-target="#how-to">How to…</a>
   <ul class="collapse">
   <li><a href="#how-to-use-the-benchmark" id="toc-how-to-use-the-benchmark" class="nav-link" data-scroll-target="#how-to-use-the-benchmark">How to use the benchmark</a></li>
@@ -124,17 +122,29 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </ul></li>
   <li><a href="#benchmark-results" id="toc-benchmark-results" class="nav-link" data-scroll-target="#benchmark-results">Benchmark results</a></li>
   <li><a href="#training-script-step-by-step" id="toc-training-script-step-by-step" class="nav-link" data-scroll-target="#training-script-step-by-step">Training script step-by-step</a></li>
-  </ul></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">SSIBench: a Self-Supervised Imaging Benchmark</h1>
+</div>
 
 
-<section id="ssibench-a-self-supervised-imaging-benchmark" class="level1">
-<h1>SSIBench: a Self-Supervised Imaging Benchmark</h1>
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
 <blockquote class="blockquote">
 <p>SSIBench is a modular benchmark for learning to solve imaging inverse problems without ground truth, applied to accelerated MRI reconstruction.</p>
 </blockquote>
@@ -187,10 +197,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Install <a href="https://deepinv.github.io/">DeepInverse</a></li>
 </ol>
 <div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install deepinv</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Then run <a href="https://github.com/ssibench/ssibench/blob/main/train.py"><code>train.py</code></a> for your chosen loss, where <code>--loss</code> is one of <code>mc</code>, …:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> train.py <span class="at">--loss</span> ...</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Then run <a href="https://github.com/ssibench/ssibench/blob/main/train.py"><code>train.py</code></a> for your chosen loss, where <code>--loss</code> is the loss function (<code>mc</code>, <code>ei</code> etc.), and <code>--physics</code> is the physics (see <a href="https://github.com/ssibench/ssibench/blob/main/train.py"><code>train.py</code></a> for options):</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> train.py <span class="at">--loss</span> ... <span class="at">--physics</span> ...</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>To evaluate, use the same script <a href="https://github.com/ssibench/ssibench/blob/main/train.py"><code>train.py</code></a> with 0 epochs and loading a checkpoint. We provide one pretrained model for quick eval for TODO</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> train.py <span class="at">--epochs</span> 0 <span class="at">--ckpt</span> <span class="st">"...pt"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> train.py <span class="at">--epochs</span> 0 <span class="at">--ckpt</span> <span class="st">"demo_mo-ei.pt"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Notation: in our benchmark, we compare the <code>loss</code> functions <span class="math inline">\(\mathcal{L}(\ldots)\)</span>, while keeping constant the <code>model</code> <span class="math inline">\(f_\theta\)</span>, forward operator <code>physics</code> <span class="math inline">\(A\)</span>, and data <span class="math inline">\(y\)</span>.</p>
 </section>
 <section id="how-to-contribute-a-method" class="level3">
@@ -280,7 +290,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>    ):</span>
 <span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> ...</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <ol start="2" type="1">
-<li>Replace <code>metric = ...</code> in <a href="https://github.com/ssibench/ssibench/blob/main/train.py"><code>train.py</code></a> with your own, then train/evaluate using the script as in <a href="#how-to-use-the-benchmark">How to use the benchmark</a>.</li>
+<li>Replace <code>metrics = ...</code> in <a href="https://github.com/ssibench/ssibench/blob/main/train.py"><code>train.py</code></a> with your own, then train/evaluate using the script as in <a href="#how-to-use-the-benchmark">How to use the benchmark</a>.</li>
 </ol>
 <hr>
 </section>
@@ -292,10 +302,136 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="training-script-step-by-step" class="level2">
 <h2 class="anchored" data-anchor-id="training-script-step-by-step">Training script step-by-step</h2>
-<p>step by step python …</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="https://colab.research.google.com/drive/1lSoR1vX-imvnJKcTvGS951ISlZjVRQfE?usp=sharing"><img src="https://colab.research.google.com/assets/colab-badge.svg" class="img-fluid figure-img"></a></p>
+</figure>
+</div>
+<p>The training script makes extensive use of modular training framework provided by <a href="https://deepinv.github.io">DeepInverse</a>.</p>
+<div class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> deepinv <span class="im">as</span> dinv</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Define training parameters:</p>
+<div class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>device <span class="op">=</span> dinv.utils.get_freer_gpu() <span class="cf">if</span> torch.cuda.is_available() <span class="cf">else</span> <span class="st">"cpu"</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>torch.manual_seed(<span class="dv">0</span>)</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>torch.cuda.manual_seed(<span class="dv">0</span>)</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>rng <span class="op">=</span> torch.Generator(device<span class="op">=</span>device).manual_seed(<span class="dv">0</span>)</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>rng_cpu <span class="op">=</span> torch.Generator(device<span class="op">=</span><span class="st">"cpu"</span>).manual_seed(<span class="dv">0</span>)</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>acceleration <span class="op">=</span> <span class="dv">6</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>batch_size <span class="op">=</span> <span class="dv">4</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>lr <span class="op">=</span> <span class="fl">1e-3</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>img_size <span class="op">=</span> (<span class="dv">320</span>, <span class="dv">320</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Define MRI physics <span class="math inline">\(A\)</span> and mask generator <span class="math inline">\(M\)</span> according to scenario</p>
+<div class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>physics_generator <span class="op">=</span> dinv.physics.generator.GaussianMaskGenerator(img_size<span class="op">=</span>img_size, acceleration<span class="op">=</span>acceleration, rng<span class="op">=</span>rng, device<span class="op">=</span>device)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>physics <span class="op">=</span> dinv.physics.MRI(img_size<span class="op">=</span>img_size, device<span class="op">=</span>device)</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="cf">match</span> args.physics:</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">case</span> <span class="st">"noisy"</span>:</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>        sigma <span class="op">=</span> <span class="fl">0.1</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>        physics.noise_model <span class="op">=</span> dinv.physics.GaussianNoise(sigma, rng<span class="op">=</span>rng)</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">case</span> <span class="st">"multicoil"</span>:</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>        physics <span class="op">=</span> dinv.physics.MultiCoilMRI(img_size<span class="op">=</span>img_size, coil_maps<span class="op">=</span><span class="dv">4</span>, device<span class="op">=</span>device)</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">case</span> <span class="st">"single"</span>:</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>        physics.update(<span class="op">**</span>physics_generator.step())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Define model <span class="math inline">\(f_\theta\)</span></p>
+<div class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>denoiser <span class="op">=</span> dinv.models.UNet(<span class="dv">2</span>, <span class="dv">2</span>, scales<span class="op">=</span><span class="dv">4</span>, batch_norm<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> dinv.models.MoDL(denoiser<span class="op">=</span>denoiser, num_iter<span class="op">=</span><span class="dv">3</span>).to(device)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Define dataset</p>
+<div class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>dataset <span class="op">=</span> dinv.datasets.SimpleFastMRISliceDataset(<span class="st">"data"</span>, file_name<span class="op">=</span><span class="st">"fastmri_brain_singlecoil.pt"</span>)</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>train_dataset, test_dataset <span class="op">=</span> torch.utils.data.random_split(dataset, (<span class="fl">0.8</span>, <span class="fl">0.2</span>), generator<span class="op">=</span>rng_cpu)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Simulate and save random measurements</p>
+<div class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>dataset_path <span class="op">=</span> dinv.datasets.generate_dataset(</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>    train_dataset<span class="op">=</span>train_dataset,</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>    test_dataset<span class="op">=</span>test_dataset,</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>    physics<span class="op">=</span>physics,</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>    physics_generator<span class="op">=</span>physics_generator <span class="cf">if</span> args.physics <span class="op">!=</span> <span class="st">"single"</span> <span class="cf">else</span> <span class="va">None</span>,</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>    save_physics_generator_params<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>    overwrite_existing<span class="op">=</span><span class="va">False</span>,</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>    device<span class="op">=</span>device,</span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>    save_dir<span class="op">=</span><span class="st">"data"</span>,</span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>    batch_size<span class="op">=</span><span class="dv">1</span>,</span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>    dataset_filename<span class="op">=</span><span class="st">"dataset_"</span> <span class="op">+</span> args.physics</span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>train_dataset <span class="op">=</span> dinv.datasets.HDF5Dataset(dataset_path, split<span class="op">=</span><span class="st">"train"</span>, load_physics_generator_params<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>test_dataset  <span class="op">=</span> dinv.datasets.HDF5Dataset(dataset_path, split<span class="op">=</span><span class="st">"test"</span>,  load_physics_generator_params<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a>train_dataloader <span class="op">=</span> torch.utils.data.DataLoader(train_dataset, batch_size<span class="op">=</span>batch_size, shuffle<span class="op">=</span><span class="va">True</span>, generator<span class="op">=</span>rng_cpu)</span>
+<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a>test_dataloader  <span class="op">=</span> torch.utils.data.DataLoader(test_dataset,  batch_size<span class="op">=</span>batch_size)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Define loss function (see <a href="https://github.com/ssibench/ssibench/blob/main/train.py"><code>train.py</code></a> for all options)</p>
+<div class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="cf">match</span> args.loss:</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">case</span> <span class="st">"mc"</span>:</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>        loss <span class="op">=</span> dinv.loss.MCLoss()</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">case</span> <span class="st">"..."</span>:</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Add your custom loss here!</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>        <span class="cf">pass</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Define metrics</p>
+<div class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>metrics <span class="op">=</span> [</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>    dinv.metric.PSNR(complex_abs<span class="op">=</span><span class="va">True</span>),</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>    dinv.metric.SSIM(complex_abs<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Define trainer</p>
+<div class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>trainer <span class="op">=</span> dinv.Trainer(</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>    model <span class="op">=</span> model,</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>    physics <span class="op">=</span> physics,</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>    optimizer <span class="op">=</span> torch.optim.Adam(model.parameters(), lr<span class="op">=</span>lr),</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>    train_dataloader <span class="op">=</span> train_dataloader,</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>    eval_dataloader <span class="op">=</span> test_dataloader,</span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>    epochs <span class="op">=</span> args.epochs,</span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>    losses <span class="op">=</span> loss,</span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>    metrics <span class="op">=</span> metrics,</span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>    device <span class="op">=</span> device,</span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>    ckpt_pretrained<span class="op">=</span>args.ckpt,</span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="10">
+<details>
+<summary>Define additional adversarial trainer (if needed)</summary>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> args.loss <span class="kw">in</span> (<span class="st">"uair"</span>, <span class="st">"adversarial"</span>):</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>    trainer <span class="op">=</span> dinv.training.AdversarialTrainer(</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>        model <span class="op">=</span> model,</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>        physics <span class="op">=</span> physics,</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>        optimizer <span class="op">=</span> dinv.training.AdversarialOptimizer(</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>            torch.optim.Adam(model.parameters(), lr<span class="op">=</span>lr), </span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>            torch.optim.Adam(discrim.parameters(), lr<span class="op">=</span>lr)</span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>        ),</span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>        train_dataloader <span class="op">=</span> train_dataloader,</span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>        eval_dataloader <span class="op">=</span> test_dataloader,</span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>        epochs <span class="op">=</span> args.epochs,</span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>        losses <span class="op">=</span> loss,</span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>        metrics <span class="op">=</span> metrics,</span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>        device <span class="op">=</span> device,</span>
+<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a>        ckpt_pretrained<span class="op">=</span>args.ckpt,</span>
+<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-18"><a href="#cb20-18" aria-hidden="true" tabindex="-1"></a>    trainer.D <span class="op">=</span> discrim</span>
+<span id="cb20-19"><a href="#cb20-19" aria-hidden="true" tabindex="-1"></a>    trainer.losses_d <span class="op">=</span> loss_d</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>Train or evaluate!</p>
+<div class="cell" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>trainer.train()</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(trainer.test(test_dataloader))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->

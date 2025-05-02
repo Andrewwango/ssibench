@@ -56,16 +56,16 @@ git clone https://github.com/ssibench/ssibench.git
 pip install deepinv
 ```
 
-Then run [`train.py`](https://github.com/ssibench/ssibench/blob/main/train.py) for your chosen loss, where `--loss` is one of `mc`, ...:
+Then run [`train.py`](https://github.com/ssibench/ssibench/blob/main/train.py) for your chosen loss, where `--loss` is the loss function (`mc`, `ei` etc.), and `--physics` is the physics (see [`train.py`](https://github.com/ssibench/ssibench/blob/main/train.py) for options):
 
 ```bash
-python train.py --loss ...
+python train.py --loss ... --physics ...
 ```
 
 To evaluate, use the same script [`train.py`](https://github.com/ssibench/ssibench/blob/main/train.py) with 0 epochs and loading a checkpoint. We provide one pretrained model for quick eval for TODO
 
 ```bash
-python train.py --epochs 0 --ckpt "...pt"
+python train.py --epochs 0 --ckpt "demo_mo-ei.pt"
 ```
 
 Notation: in our benchmark, we compare the `loss` functions $\mathcal{L}(\ldots)$, while keeping constant the `model` $f_\theta$, forward operator `physics` $A$, and data $y$.
@@ -150,7 +150,7 @@ class YourOwnMetric(dinv.loss.metric.Metric):
     ):
         return ...
 ```
-2. Replace `metric = ...` in [`train.py`](https://github.com/ssibench/ssibench/blob/main/train.py) with your own, then train/evaluate using the script as in [How to use the benchmark](#how-to-use-the-benchmark).
+2. Replace `metrics = ...` in [`train.py`](https://github.com/ssibench/ssibench/blob/main/train.py) with your own, then train/evaluate using the script as in [How to use the benchmark](#how-to-use-the-benchmark).
 
 ---
 
@@ -161,5 +161,146 @@ TODO
 ---
 
 ## Training script step-by-step
+[![](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1lSoR1vX-imvnJKcTvGS951ISlZjVRQfE?usp=sharing)
 
-step by step python …
+The training script makes extensive use of modular training framework provided by [DeepInverse](https://deepinv.github.io).
+
+```{python}
+import deepinv as dinv
+import torch
+```
+
+Define training parameters:
+
+```{python}
+device = dinv.utils.get_freer_gpu() if torch.cuda.is_available() else "cpu"
+torch.manual_seed(0)
+torch.cuda.manual_seed(0)
+rng = torch.Generator(device=device).manual_seed(0)
+rng_cpu = torch.Generator(device="cpu").manual_seed(0)
+acceleration = 6
+batch_size = 4
+lr = 1e-3
+img_size = (320, 320)
+```
+
+Define MRI physics $A$ and mask generator $M$ according to scenario
+
+```{python}
+physics_generator = dinv.physics.generator.GaussianMaskGenerator(img_size=img_size, acceleration=acceleration, rng=rng, device=device)
+physics = dinv.physics.MRI(img_size=img_size, device=device)
+
+match args.physics:
+    case "noisy":
+        sigma = 0.1
+        physics.noise_model = dinv.physics.GaussianNoise(sigma, rng=rng)
+    case "multicoil":
+        physics = dinv.physics.MultiCoilMRI(img_size=img_size, coil_maps=4, device=device)
+    case "single":
+        physics.update(**physics_generator.step())
+```
+
+Define model $f_\theta$
+
+```{python}
+denoiser = dinv.models.UNet(2, 2, scales=4, batch_norm=False)
+model = dinv.models.MoDL(denoiser=denoiser, num_iter=3).to(device)
+```
+
+Define dataset
+
+```{python}
+dataset = dinv.datasets.SimpleFastMRISliceDataset("data", file_name="fastmri_brain_singlecoil.pt")
+train_dataset, test_dataset = torch.utils.data.random_split(dataset, (0.8, 0.2), generator=rng_cpu)
+```
+
+Simulate and save random measurements
+```{python}
+dataset_path = dinv.datasets.generate_dataset(
+    train_dataset=train_dataset,
+    test_dataset=test_dataset,
+    physics=physics,
+    physics_generator=physics_generator if args.physics != "single" else None,
+    save_physics_generator_params=True,
+    overwrite_existing=False,
+    device=device,
+    save_dir="data",
+    batch_size=1,
+    dataset_filename="dataset_" + args.physics
+)
+
+train_dataset = dinv.datasets.HDF5Dataset(dataset_path, split="train", load_physics_generator_params=True)
+test_dataset  = dinv.datasets.HDF5Dataset(dataset_path, split="test",  load_physics_generator_params=True)
+train_dataloader = torch.utils.data.DataLoader(train_dataset, batch_size=batch_size, shuffle=True, generator=rng_cpu)
+test_dataloader  = torch.utils.data.DataLoader(test_dataset,  batch_size=batch_size)
+```
+
+Define loss function (see [`train.py`](https://github.com/ssibench/ssibench/blob/main/train.py) for all options)
+
+```{python}
+match args.loss:
+    case "mc":
+        loss = dinv.loss.MCLoss()
+
+    case "...":
+        # Add your custom loss here!
+        pass
+```
+
+Define metrics
+
+```{python}
+metrics = [
+    dinv.metric.PSNR(complex_abs=True),
+    dinv.metric.SSIM(complex_abs=True)
+]
+```
+Define trainer
+
+```{python}
+trainer = dinv.Trainer(
+    model = model,
+    physics = physics,
+    optimizer = torch.optim.Adam(model.parameters(), lr=lr),
+    train_dataloader = train_dataloader,
+    eval_dataloader = test_dataloader,
+    epochs = args.epochs,
+    losses = loss,
+    metrics = metrics,
+    device = device,
+    ckpt_pretrained=args.ckpt,
+)
+```
+
+```{python}
+#| code-fold: true
+#| code-summary: Define additional adversarial trainer (if needed)
+
+if args.loss in ("uair", "adversarial"):
+    trainer = dinv.training.AdversarialTrainer(
+        model = model,
+        physics = physics,
+        optimizer = dinv.training.AdversarialOptimizer(
+            torch.optim.Adam(model.parameters(), lr=lr), 
+            torch.optim.Adam(discrim.parameters(), lr=lr)
+        ),
+        train_dataloader = train_dataloader,
+        eval_dataloader = test_dataloader,
+        epochs = args.epochs,
+        losses = loss,
+        metrics = metrics,
+        device = device,
+        ckpt_pretrained=args.ckpt,
+    )
+
+    trainer.D = discrim
+    trainer.losses_d = loss_d
+```
+
+Train or evaluate!
+
+```{python}
+trainer.train()
+
+print(trainer.test(test_dataloader))
+```
