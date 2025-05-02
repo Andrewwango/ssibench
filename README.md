@@ -80,16 +80,16 @@ class YourOwnLoss(deepinv.loss.Loss):
         self, 
         x_net: torch.Tensor,    # Reconstruction i.e. model output
         y: torch.Tensor,        # Measurement data e.g. k-space in MRI
-        x: torch.Tensor = None, # Ground truth, must be unused!
         model: deepinv.models.Reconstructor, # Reconstruction model $f_\theta$
         physics: deepinv.physics.Physics,    # Forward operator physics $A$
+        x: torch.Tensor = None, # Ground truth, must be unused!
         **kwargs
     ):
         loss_calc = ...
         return loss_calc
 ```
 2. Add your loss function as an option in [`train.py`](https://github.com/Andrewwango/ssibench/blob/main/train.py) (hint: search _"Add your custom loss here!"_)
-3. Open a [GitHub pull request](https://github.com/Andrewwango/ssibench/pulls) to contribute your loss! (hint: [how to open a PR in GitHub](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request))
+3. Open a [GitHub pull request](https://github.com/Andrewwango/ssibench/pulls) to contribute your loss! (hint: [see example here](https://github.com/Andrewwango/ssibench/pull/1); hint: [how to open a PR in GitHub](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request))
 
 
 ### How to use a custom dataset
@@ -143,7 +143,7 @@ class YourOwnPhysics(deepinv.physics.Physics):
 
 1. The custom metric should have the form (see [DeepInverse docs](https://deepinv.github.io/deepinv/user_guide/training/metric.html) for details):
 ```python
-class YourOwnMetric(dinv.loss.metric.Metric):
+class YourOwnMetric(deepinv.loss.metric.Metric):
     def metric(
         self, 
         x_net: torch.Tensor, # Reconstruction i.e. model output
