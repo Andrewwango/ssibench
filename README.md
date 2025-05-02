@@ -7,7 +7,7 @@
 [![arXiv](https://img.shields.io/badge/arXiv-2502.14009-b31b1b.svg)](https://arxiv.org/abs/2502.14009)
 [![Code](https://img.shields.io/badge/GitHub-Code-blue.svg)](https://github.com/Andrewwango/ssibench)
 [![Benchmark](https://img.shields.io/badge/Web-Benchmark-ff69b4.svg)](https://andrewwango.github.io/ssibench)
-[![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1lSoR1vX-imvnJKcTvGS951ISlZjVRQfE?usp=sharing)
+[![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/15CFQ7Lp9Xk-J3ltJ6kWHIs5tk8Z4VBYD?usp=sharing)
 
 ---
 
@@ -20,8 +20,9 @@ Skip to...
     a. [...use the benchmark](#how-to-use-the-benchmark)  
     b. [...contribute a method](#how-to-contribute-a-method)  
     c. [...use a custom dataset](#how-to-use-a-custom-dataset), [model](#how-to-use-a-custom-model), [forward operator/acquisition strategy](#how-to-use-a-custom-forward-operatoracquisition-strategy), [metric](#how-to-use-a-custom-metric)  
-3. [Benchmark results](#benchmark-results)
+3. [Leaderboard](#leaderboard)
 4. [Training script step-by-step](#training-script-step-by-step)
+5. [Dataset preparation instructions](#dataset-preparation-instructions)
 
 ---
 
@@ -154,14 +155,14 @@ class YourOwnMetric(dinv.loss.metric.Metric):
 
 ---
 
-## Benchmark results
+## Leaderboard
 
 TODO
 
 ---
 
 ## Training script step-by-step
-[![](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1lSoR1vX-imvnJKcTvGS951ISlZjVRQfE?usp=sharing)
+[![](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/15CFQ7Lp9Xk-J3ltJ6kWHIs5tk8Z4VBYD?usp=sharing)
 
 The training script makes extensive use of modular training framework provided by [DeepInverse](https://deepinv.github.io).
 
@@ -182,6 +183,12 @@ acceleration = 6
 batch_size = 4
 lr = 1e-3
 img_size = (320, 320)
+
+class args: # Command line args from train.py
+    physics = "mri"
+    epochs = 0
+    loss = "mc"
+    ckpt = None
 ```
 
 Define MRI physics $A$ and mask generator $M$ according to scenario
@@ -304,3 +311,7 @@ trainer.train()
 
 print(trainer.test(test_dataloader))
 ```
+
+# Dataset preparation instructions
+
+TODO
