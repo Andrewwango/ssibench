@@ -7,9 +7,9 @@ parser.add_argument("--epochs", type=int, default=0)  # Number of training epoch
 parser.add_argument("--ckpt", type=str, default=None) # Pretrained model path
 parser.add_argument("--loss", type=str, default="mc", choices=(
     "mc", "sup", 
-    "ssdu", "noise2inverse", "weighted-ssdu",
+    "ssdu", "noise2inverse", "weighted-ssdu", "ssdu-consistency",
     "adversarial", "uair",
-    "vortex", "ei", "moi", "mo-ei",
+    "vortex", "ei", "moi", "moc-ssdu", "mo-ei",
     "ensure", "noise2recon-ssdu", "robust-ssdu", "robust-ei", "robust-mo-ei",
     # Add your custom loss here!
 ))
@@ -97,8 +97,19 @@ match args.loss:
     case "weighted-ssdu":
         split_generator = dinv.physics.generator.GaussianMaskGenerator(img_size=(1, *img_size), acceleration=2, center_fraction=0., rng=rng, device=device)
         mask_generator = dinv.physics.generator.MultiplicativeSplittingMaskGenerator((1, *img_size), split_generator, device=device)
-        loss = dinv.loss.WeightedSplittingLoss(mask_generator=mask_generator, physics_generator=physics_generator)        
+        loss = dinv.loss.mri.WeightedSplittingLoss(mask_generator=mask_generator, physics_generator=physics_generator)        
     
+    case "moc-ssdu":
+        loss = [
+            MOConsistencyLoss(physics_generator=physics_generator),
+            dinv.loss.SplittingLoss(
+                mask_generator=dinv.physics.generator.BernoulliSplittingMaskGenerator((1, *img_size), split_ratio=0.6, device=device, rng=rng),
+                eval_split_input=False
+        )]
+
+    case "ssdu-consistency":
+        loss = SplittingConsistencyLoss(mask_generator=dinv.physics.generator.BernoulliSplittingMaskGenerator((1, *img_size), split_ratio=0.6, device=device, rng=rng))
+
     case "adversarial":
         discrim = dinv.models.gan.SkipConvDiscriminator(img_size, use_sigmoid=False).to(device)
         
@@ -144,13 +155,13 @@ match args.loss:
     case "robust-ssdu":
         split_generator = dinv.physics.generator.GaussianMaskGenerator(img_size=img_size, acceleration=2, center_fraction=0., rng=rng, device=device)
         mask_generator = dinv.physics.generator.MultiplicativeSplittingMaskGenerator((1, *img_size), split_generator, device=device)
-        loss = dinv.loss.RobustSplittingLoss(mask_generator, physics_generator, dinv.physics.GaussianNoise(sigma=sigma, rng=torch.Generator(device).manual_seed(42)))
+        loss = dinv.loss.mri.RobustSplittingLoss(mask_generator, physics_generator, dinv.physics.GaussianNoise(sigma=sigma, rng=torch.Generator(device).manual_seed(42)))
     
     case "noise2recon-ssdu":
         split_generator = dinv.physics.generator.GaussianMaskGenerator(img_size=img_size, acceleration=2, center_fraction=0., rng=rng, device=device)
         mask_generator = dinv.physics.generator.MultiplicativeSplittingMaskGenerator((1, *img_size), split_generator, device=device)
         loss = [
-            dinv.loss.WeightedSplittingLoss(mask_generator=mask_generator, physics_generator=physics_generator),
+            dinv.loss.mri.WeightedSplittingLoss(mask_generator=mask_generator, physics_generator=physics_generator),
             dinv.loss.AugmentConsistencyLoss(dinv.transform.RandomNoise(sigma=(sigma * 0.5, sigma * 2), rng=rng), dinv.transform.Identity(), no_grad=False)
         ]
     
