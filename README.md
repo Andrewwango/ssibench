@@ -1,4 +1,4 @@
-# SSIBench: a Self-Supervised Imaging Benchmark
+# SSIBench: Benchmarking Self-Supervised Learning Methods for Accelerated MRI Reconstruction
 
 > SSIBench is a modular benchmark for learning to solve imaging inverse problems without ground truth, applied to accelerated MRI reconstruction.
 
@@ -20,7 +20,7 @@ Skip to...
     a. [...use the benchmark](#how-to-use-the-benchmark)  
     b. [...contribute a method](#how-to-contribute-a-method)  
     c. [...use a custom dataset](#how-to-use-a-custom-dataset), [model](#how-to-use-a-custom-model), [forward operator/acquisition strategy](#how-to-use-a-custom-forward-operatoracquisition-strategy), [metric](#how-to-use-a-custom-metric)  
-3. [Leaderboard](#leaderboard)
+3. [Live leaderboard](#live-leaderboard)
 4. [Training script step-by-step](#training-script-step-by-step)
 5. [Dataset preparation instructions](#dataset-preparation-instructions)
 
@@ -32,7 +32,7 @@ SSIBench is a modular benchmark for learning to solve imaging inverse problems w
 
 1. A comprehensive review of state-of-the-art self-supervised feedforward methods for inverse problems;
 2. Well-documented implementations of all benchmarked methods in the open-source [DeepInverse](https://deepinv.github.io/) library, and a modular [benchmark site](https://andrewwango.github.io/ssibench) enabling ML researchers to evaluate new methods or on custom setups and datasets;
-3. Benchmarking experiments on MRI, across multiple realistic, general scenarios;
+3. Benchmarking experiments on MRI, on a standardised setup across multiple realistic, general scenarios;
 4. A new method, multi-operator equivariant imaging (MO-EI).
 
 ---
@@ -54,7 +54,8 @@ git clone https://github.com/Andrewwango/ssibench.git
 ```
 3. Install [DeepInverse](https://deepinv.github.io/)
 ```bash
-pip install deepinv
+pip install deepinv   # Stable
+pip install git+https://github.com/deepinv/deepinv.git#egg=deepinv   # Nightly
 ```
 4. Prepare your [fastMRI](https://fastmri.med.nyu.edu/) data using the [below instructions](#dataset-preparation-instructions).
 
@@ -90,7 +91,9 @@ class YourOwnLoss(deepinv.loss.Loss):
         return loss_calc
 ```
 2. Add your loss function as an option in [`train.py`](https://github.com/Andrewwango/ssibench/blob/main/train.py) (hint: search _"Add your custom loss here!"_)
-3. Open a [GitHub pull request](https://github.com/Andrewwango/ssibench/pulls) to contribute your loss! (hint: [see example here](https://github.com/Andrewwango/ssibench/pull/1); hint: [how to open a PR in GitHub](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request))
+3. Benchmark your method by running [`train.py`](https://github.com/Andrewwango/ssibench/blob/main/train.py) (hint: [_"How to use the benchmark"_](#how-to-use-the-benchmark)).
+4. Submit your results by editing the [live leaderboard](#live-leaderboard).
+5. Open a [GitHub pull request](https://github.com/Andrewwango/ssibench/pulls) to contribute your loss! (hint: [see example here](https://github.com/Andrewwango/ssibench/pull/1); hint: [how to open a PR in GitHub](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request))
 
 
 ### How to use a custom dataset
@@ -156,24 +159,96 @@ class YourOwnMetric(deepinv.loss.metric.Metric):
 
 ---
 
-## Leaderboard
+## Live leaderboard
 
-The following is reproduced from Table 2 from [the paper](https://arxiv.org/abs/2502.14009).
+We provide a live leaderboard for each experimental scenario described in [the paper](https://arxiv.org/abs/2502.14009). Got a new method? [Contribute it](#how-to-contribute-a-method) to the leaderboard!
 
-|     **Loss**    | **PSNR**| **SSIM**|
-|-------------|-----|-----|
-| Zero-filled |27.67|.7862|
-|      MC     |27.66|.7861|
-|     SSDU    |27.98|.7485|
-|Noise2Inverse|28.42|.7853|
-|Weighted-SSDU|29.93|.8355|
-| Adversarial |18.52|.4732|
-|     UAIR    |14.00|.3715|
-|    VORTEX   |27.75|.7898|
-|      EI     |30.26|.8523|
-|     MOI     |30.29|.8651|
-|    MO-EI    |32.14|.8846|
-| (Supervised)|33.15|.9032|
+<details><summary>Scenario 1 (single-coil)</summary>
+
+| # |     **Loss**    | **PSNR**| **SSIM**|
+| --- | --- | --- | --- |
+| 1 | UAIR | 14.00 | .3715 |
+| 2 | Adversarial | 18.52 | .4732 |
+| 3 | MC  | 27.66 | .7861 |
+| 4 | Zero-filled | 27.67 | .7862 |
+| 5 | VORTEX | 27.75 | .7898 |
+| 6 | SSDU | 27.98 | .7485 |
+| 7 | Noise2Inverse | 28.42 | .7853 |
+| 8 | Weighted-SSDU | 29.93 | .8355 |
+| 9 | EI  | 30.26 | .8523 |
+| 10 | MOI | 30.29 | .8651 |
+| 11 | MOC-SSDU | 30.42 | .8198 |
+| 12 | SSDU-Consistency | 30.81 | .8495 |
+| 13 | MO-EI (ours) | 32.14 | .8846 |
+| 14 | (Supervised) | 33.15 | .9032 |
+
+![](img/results_brain.png)
+
+</details>
+
+<details><summary>Scenario 2 (noisy)</summary>
+
+| # |     **Loss**    | **PSNR**| **SSIM**|
+| --- | --- | --- | --- |
+| 1 | Zero-filled | 24.34 | .4428 |
+| 2 | (Non-robust) Weighted-SSDU | 25.91 | .5477 |
+| 3 | (Non-robust) MO-EI | 26.12 | .6002 |
+| 4 | ENSURE | 26.29 | .5856 |
+| 5 | Robust-SSDU | 27.42 | .6159 |
+| 6 | Noise2Recon-SSDU | 27.84 | .7661 |
+| 7 | Robust-EI | 29.07 | .8227 |
+| 8 | Robust-MO-EI | 29.72 | .8409 |
+| 9 | (Supervised) | 30.19 | .8411 |
+
+![](img/results_brain_noisy.png)
+
+</details>
+
+<details><summary>Scenario 3 (single-operator)</summary>
+
+| # |     **Loss**    | **PSNR**| **SSIM**|
+| --- |----------------|-----|-----|
+| 1 |      UAIR      |18.44|.5388|
+| 2 |      SSDU      |21.89|.6288|
+| 3 |  Noise2Inverse |24.63|.6559|
+| 4 |   Adversarial  |26.53|.7013|
+| 5 |    MOC-SSDU    |27.85|.7717|
+| 6 |   Zero-filled  |28.02|.7900|
+| 7 |       MC       |28.02|.7900|
+| 8 |     VORTEX     |28.07|.7916|
+| 9 |  Weighted-SSDU |30.14|.8454|
+| 10 |SSDU-Consistency|31.05|.8614|
+| 11 |  MO-EI (ours)  |31.11|.8713|
+| 12 |       MOI      |31.60|.8789|
+| 13 |       EI       |31.99|.8806|
+| 14 |  (Supervised)  |34.03|.9040|
+
+![](img/results_brain_single.png)
+
+</details>
+
+<details><summary>Scenario 4 (multi-coil)</summary>
+
+| # |     **Loss**    | **PSNR**| **SSIM**|
+| --- |----------------|-----|-----|
+| 1 |      UAIR      |15.26|.3453|
+| 2 |   Adversarial  |17.47|.6464|
+| 3 |     VORTEX     |23.59|.5846|
+| 4 |   Zero-filled  |27.82|.7988|
+| 5 |       MC       |28.96|.8271|
+| 6 |  Noise2Inverse |30.93|.8589|
+| 7 |       MOI      |31.37|.8810|
+| 8 |      SSDU      |31.47|.8705|
+| 9 |  MO-EI (ours)  |31.56|.8836|
+| 10 |       EI       |31.66|.8769|
+| 11 |    MOC-SSDU    |31.80|.8761|
+| 12 |SSDU-Consistency|32.30|.8949|
+| 13 |  Weighted-SSDU |33.03|.8991|
+| 14 |  (Supervised)  |33.89|.9147|
+
+![](img/results_brain_multicoil.png)
+
+</details>
 
 ---
 
