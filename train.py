@@ -75,6 +75,10 @@ train_dataloader = torch.utils.data.DataLoader(train_dataset, batch_size=batch_s
 test_dataloader  = torch.utils.data.DataLoader(test_dataset,  batch_size=batch_size)
 
 # Define loss function
+#
+# Note that if the losses cannot be imported, they are likely still in the process of being merged.
+# Check progress on DeepInverse https://github.com/deepinv/deepinv/pulls
+# and if desired install DeepInverse from a PR branch.
 from utils import *
 match args.loss:
     case "mc":
