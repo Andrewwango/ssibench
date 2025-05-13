@@ -54,7 +54,8 @@ git clone https://github.com/Andrewwango/ssibench.git
 ```
 3. Install [DeepInverse](https://deepinv.github.io/)
 ```bash
-pip install deepinv
+pip install deepinv   # Stable
+pip install git+https://github.com/deepinv/deepinv.git#egg=deepinv   # Nightly
 ```
 4. Prepare your [fastMRI](https://fastmri.med.nyu.edu/) data using the [below instructions](#dataset-preparation-instructions).
 
