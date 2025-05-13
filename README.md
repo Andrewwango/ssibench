@@ -179,8 +179,9 @@ We provide a live leaderboard for each experimental scenario described in [the p
 | 10 | MOI | 30.29 | .8651 |
 | 11 | MOC-SSDU | 30.42 | .8198 |
 | 12 | SSDU-Consistency | 30.81 | .8495 |
-| 13 | MO-EI (ours) | 32.14 | .8846 |
-| 14 | (Supervised) | 33.15 | .9032 |
+| 13 | MO-EI  | 32.14 | .8846 |
+| 14 | YourOwnLoss  | 33.00 | .9000 |
+| 15 | (Supervised) | 33.15 | .9032 |
 
 ![](img/results_brain.png)
 
@@ -218,10 +219,11 @@ We provide a live leaderboard for each experimental scenario described in [the p
 | 8 |     VORTEX     |28.07|.7916|
 | 9 |  Weighted-SSDU |30.14|.8454|
 | 10 |SSDU-Consistency|31.05|.8614|
-| 11 |  MO-EI (ours)  |31.11|.8713|
+| 11 |  MO-EI   |31.11|.8713|
 | 12 |       MOI      |31.60|.8789|
 | 13 |       EI       |31.99|.8806|
-| 14 |  (Supervised)  |34.03|.9040|
+| 14 | YourOwnLoss  | 33.00 | .9000 |
+| 15 |  (Supervised)  |34.03|.9040|
 
 ![](img/results_brain_single.png)
 
@@ -239,12 +241,13 @@ We provide a live leaderboard for each experimental scenario described in [the p
 | 6 |  Noise2Inverse |30.93|.8589|
 | 7 |       MOI      |31.37|.8810|
 | 8 |      SSDU      |31.47|.8705|
-| 9 |  MO-EI (ours)  |31.56|.8836|
+| 9 |  MO-EI   |31.56|.8836|
 | 10 |       EI       |31.66|.8769|
 | 11 |    MOC-SSDU    |31.80|.8761|
 | 12 |SSDU-Consistency|32.30|.8949|
 | 13 |  Weighted-SSDU |33.03|.8991|
-| 14 |  (Supervised)  |33.89|.9147|
+| 14 | YourOwnLoss  | 33.50 | .9000 |
+| 15 |  (Supervised)  |33.89|.9147|
 
 ![](img/results_brain_multicoil.png)
 
