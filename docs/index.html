@@ -120,7 +120,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#how-to-use-a-custom-forward-operatoracquisition-strategy" id="toc-how-to-use-a-custom-forward-operatoracquisition-strategy" class="nav-link" data-scroll-target="#how-to-use-a-custom-forward-operatoracquisition-strategy">How to use a custom forward operator/acquisition strategy</a></li>
   <li><a href="#how-to-use-a-custom-metric" id="toc-how-to-use-a-custom-metric" class="nav-link" data-scroll-target="#how-to-use-a-custom-metric">How to use a custom metric</a></li>
   </ul></li>
-  <li><a href="#leaderboard" id="toc-leaderboard" class="nav-link" data-scroll-target="#leaderboard">Leaderboard</a></li>
+  <li><a href="#live-leaderboard" id="toc-live-leaderboard" class="nav-link" data-scroll-target="#live-leaderboard">Live leaderboard</a></li>
   <li><a href="#training-script-step-by-step" id="toc-training-script-step-by-step" class="nav-link" data-scroll-target="#training-script-step-by-step">Training script step-by-step</a></li>
   <li><a href="#dataset-preparation-instructions" id="toc-dataset-preparation-instructions" class="nav-link" data-scroll-target="#dataset-preparation-instructions">Dataset preparation instructions</a></li>
   </ul>
@@ -131,7 +131,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">SSIBench: a Self-Supervised Imaging Benchmark</h1>
+<h1 class="title">SSIBench: Benchmarking Self-Supervised Learning Methods for Accelerated MRI Reconstruction</h1>
 </div>
 
 
@@ -165,7 +165,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><a href="#how-to-use-a-custom-dataset">…use a custom dataset</a>, <a href="#how-to-use-a-custom-model">model</a>, <a href="#how-to-use-a-custom-forward-operatoracquisition-strategy">forward operator/acquisition strategy</a>, <a href="#how-to-use-a-custom-metric">metric</a><br>
 </li>
 </ol></li>
-<li><a href="#leaderboard">Leaderboard</a></li>
+<li><a href="#live-leaderboard">Live leaderboard</a></li>
 <li><a href="#training-script-step-by-step">Training script step-by-step</a></li>
 <li><a href="#dataset-preparation-instructions">Dataset preparation instructions</a></li>
 </ol>
@@ -176,7 +176,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <ol type="1">
 <li>A comprehensive review of state-of-the-art self-supervised feedforward methods for inverse problems;</li>
 <li>Well-documented implementations of all benchmarked methods in the open-source <a href="https://deepinv.github.io/">DeepInverse</a> library, and a modular <a href="https://andrewwango.github.io/ssibench">benchmark site</a> enabling ML researchers to evaluate new methods or on custom setups and datasets;</li>
-<li>Benchmarking experiments on MRI, across multiple realistic, general scenarios;</li>
+<li>Benchmarking experiments on MRI, on a standardised setup across multiple realistic, general scenarios;</li>
 <li>A new method, multi-operator equivariant imaging (MO-EI).</li>
 </ol>
 <hr>
@@ -227,6 +227,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> loss_calc</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <ol start="2" type="1">
 <li>Add your loss function as an option in <a href="https://github.com/Andrewwango/ssibench/blob/main/train.py"><code>train.py</code></a> (hint: search <em>“Add your custom loss here!”</em>)</li>
+<li>Benchmark your method by running <a href="https://github.com/Andrewwango/ssibench/blob/main/train.py"><code>train.py</code></a> (hint: <a href="#how-to-use-the-benchmark"><em>“How to use the benchmark”</em></a>).</li>
+<li>Submit your results by editing the <a href="#live-leaderboard">live leaderboard</a>.</li>
 <li>Open a <a href="https://github.com/Andrewwango/ssibench/pulls">GitHub pull request</a> to contribute your loss! (hint: <a href="https://github.com/Andrewwango/ssibench/pull/1">see example here</a>; hint: <a href="https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request">how to open a PR in GitHub</a>)</li>
 </ol>
 </section>
@@ -300,12 +302,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <hr>
 </section>
 </section>
-<section id="leaderboard" class="level2">
-<h2 class="anchored" data-anchor-id="leaderboard">Leaderboard</h2>
-<p>The following is reproduced from Table 2 from <a href="https://arxiv.org/abs/2502.14009">the paper</a>.</p>
+<section id="live-leaderboard" class="level2">
+<h2 class="anchored" data-anchor-id="live-leaderboard">Live leaderboard</h2>
+<p>We provide a live leaderboard for each experimental scenario described in <a href="https://arxiv.org/abs/2502.14009">the paper</a>. Got a new method? <a href="#how-to-contribute-a-method">Contribute it</a> to the leaderboard!</p>
+<details>
+<summary>
+Scenario 1 (single-coil)
+</summary>
 <table class="table">
 <thead>
 <tr class="header">
+<th>#</th>
 <th><strong>Loss</strong></th>
 <th><strong>PSNR</strong></th>
 <th><strong>SSIM</strong></th>
@@ -313,67 +320,369 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </thead>
 <tbody>
 <tr class="odd">
-<td>Zero-filled</td>
-<td>27.67</td>
-<td>.7862</td>
-</tr>
-<tr class="even">
-<td>MC</td>
-<td>27.66</td>
-<td>.7861</td>
-</tr>
-<tr class="odd">
-<td>SSDU</td>
-<td>27.98</td>
-<td>.7485</td>
-</tr>
-<tr class="even">
-<td>Noise2Inverse</td>
-<td>28.42</td>
-<td>.7853</td>
-</tr>
-<tr class="odd">
-<td>Weighted-SSDU</td>
-<td>29.93</td>
-<td>.8355</td>
-</tr>
-<tr class="even">
-<td>Adversarial</td>
-<td>18.52</td>
-<td>.4732</td>
-</tr>
-<tr class="odd">
+<td>1</td>
 <td>UAIR</td>
 <td>14.00</td>
 <td>.3715</td>
 </tr>
 <tr class="even">
+<td>2</td>
+<td>Adversarial</td>
+<td>18.52</td>
+<td>.4732</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>MC</td>
+<td>27.66</td>
+<td>.7861</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>Zero-filled</td>
+<td>27.67</td>
+<td>.7862</td>
+</tr>
+<tr class="odd">
+<td>5</td>
 <td>VORTEX</td>
 <td>27.75</td>
 <td>.7898</td>
 </tr>
+<tr class="even">
+<td>6</td>
+<td>SSDU</td>
+<td>27.98</td>
+<td>.7485</td>
+</tr>
 <tr class="odd">
+<td>7</td>
+<td>Noise2Inverse</td>
+<td>28.42</td>
+<td>.7853</td>
+</tr>
+<tr class="even">
+<td>8</td>
+<td>Weighted-SSDU</td>
+<td>29.93</td>
+<td>.8355</td>
+</tr>
+<tr class="odd">
+<td>9</td>
 <td>EI</td>
 <td>30.26</td>
 <td>.8523</td>
 </tr>
 <tr class="even">
+<td>10</td>
 <td>MOI</td>
 <td>30.29</td>
 <td>.8651</td>
 </tr>
 <tr class="odd">
-<td>MO-EI</td>
+<td>11</td>
+<td>MOC-SSDU</td>
+<td>30.42</td>
+<td>.8198</td>
+</tr>
+<tr class="even">
+<td>12</td>
+<td>SSDU-Consistency</td>
+<td>30.81</td>
+<td>.8495</td>
+</tr>
+<tr class="odd">
+<td>13</td>
+<td>MO-EI (ours)</td>
 <td>32.14</td>
 <td>.8846</td>
 </tr>
 <tr class="even">
+<td>14</td>
 <td>(Supervised)</td>
 <td>33.15</td>
 <td>.9032</td>
 </tr>
 </tbody>
 </table>
+<p><img src="img/results_brain.png" class="img-fluid"></p>
+</details>
+<details>
+<summary>
+Scenario 2 (noisy)
+</summary>
+<table class="table">
+<thead>
+<tr class="header">
+<th>#</th>
+<th><strong>Loss</strong></th>
+<th><strong>PSNR</strong></th>
+<th><strong>SSIM</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>Zero-filled</td>
+<td>24.34</td>
+<td>.4428</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>(Non-robust) Weighted-SSDU</td>
+<td>25.91</td>
+<td>.5477</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>(Non-robust) MO-EI</td>
+<td>26.12</td>
+<td>.6002</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>ENSURE</td>
+<td>26.29</td>
+<td>.5856</td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td>Robust-SSDU</td>
+<td>27.42</td>
+<td>.6159</td>
+</tr>
+<tr class="even">
+<td>6</td>
+<td>Noise2Recon-SSDU</td>
+<td>27.84</td>
+<td>.7661</td>
+</tr>
+<tr class="odd">
+<td>7</td>
+<td>Robust-EI</td>
+<td>29.07</td>
+<td>.8227</td>
+</tr>
+<tr class="even">
+<td>8</td>
+<td>Robust-MO-EI</td>
+<td>29.72</td>
+<td>.8409</td>
+</tr>
+<tr class="odd">
+<td>9</td>
+<td>(Supervised)</td>
+<td>30.19</td>
+<td>.8411</td>
+</tr>
+</tbody>
+</table>
+<p><img src="img/results_brain_noisy.png" class="img-fluid"></p>
+</details>
+<details>
+<summary>
+Scenario 3 (single-operator)
+</summary>
+<table class="table">
+<thead>
+<tr class="header">
+<th>#</th>
+<th><strong>Loss</strong></th>
+<th><strong>PSNR</strong></th>
+<th><strong>SSIM</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>UAIR</td>
+<td>18.44</td>
+<td>.5388</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>SSDU</td>
+<td>21.89</td>
+<td>.6288</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>Noise2Inverse</td>
+<td>24.63</td>
+<td>.6559</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>Adversarial</td>
+<td>26.53</td>
+<td>.7013</td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td>MOC-SSDU</td>
+<td>27.85</td>
+<td>.7717</td>
+</tr>
+<tr class="even">
+<td>6</td>
+<td>Zero-filled</td>
+<td>28.02</td>
+<td>.7900</td>
+</tr>
+<tr class="odd">
+<td>7</td>
+<td>MC</td>
+<td>28.02</td>
+<td>.7900</td>
+</tr>
+<tr class="even">
+<td>8</td>
+<td>VORTEX</td>
+<td>28.07</td>
+<td>.7916</td>
+</tr>
+<tr class="odd">
+<td>9</td>
+<td>Weighted-SSDU</td>
+<td>30.14</td>
+<td>.8454</td>
+</tr>
+<tr class="even">
+<td>10</td>
+<td>SSDU-Consistency</td>
+<td>31.05</td>
+<td>.8614</td>
+</tr>
+<tr class="odd">
+<td>11</td>
+<td>MO-EI (ours)</td>
+<td>31.11</td>
+<td>.8713</td>
+</tr>
+<tr class="even">
+<td>12</td>
+<td>MOI</td>
+<td>31.60</td>
+<td>.8789</td>
+</tr>
+<tr class="odd">
+<td>13</td>
+<td>EI</td>
+<td>31.99</td>
+<td>.8806</td>
+</tr>
+<tr class="even">
+<td>14</td>
+<td>(Supervised)</td>
+<td>34.03</td>
+<td>.9040</td>
+</tr>
+</tbody>
+</table>
+<p><img src="img/results_brain_single.png" class="img-fluid"></p>
+</details>
+<details>
+<summary>
+Scenario 4 (multi-coil)
+</summary>
+<table class="table">
+<thead>
+<tr class="header">
+<th>#</th>
+<th><strong>Loss</strong></th>
+<th><strong>PSNR</strong></th>
+<th><strong>SSIM</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>UAIR</td>
+<td>15.26</td>
+<td>.3453</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>Adversarial</td>
+<td>17.47</td>
+<td>.6464</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>VORTEX</td>
+<td>23.59</td>
+<td>.5846</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>Zero-filled</td>
+<td>27.82</td>
+<td>.7988</td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td>MC</td>
+<td>28.96</td>
+<td>.8271</td>
+</tr>
+<tr class="even">
+<td>6</td>
+<td>Noise2Inverse</td>
+<td>30.93</td>
+<td>.8589</td>
+</tr>
+<tr class="odd">
+<td>7</td>
+<td>MOI</td>
+<td>31.37</td>
+<td>.8810</td>
+</tr>
+<tr class="even">
+<td>8</td>
+<td>SSDU</td>
+<td>31.47</td>
+<td>.8705</td>
+</tr>
+<tr class="odd">
+<td>9</td>
+<td>MO-EI (ours)</td>
+<td>31.56</td>
+<td>.8836</td>
+</tr>
+<tr class="even">
+<td>10</td>
+<td>EI</td>
+<td>31.66</td>
+<td>.8769</td>
+</tr>
+<tr class="odd">
+<td>11</td>
+<td>MOC-SSDU</td>
+<td>31.80</td>
+<td>.8761</td>
+</tr>
+<tr class="even">
+<td>12</td>
+<td>SSDU-Consistency</td>
+<td>32.30</td>
+<td>.8949</td>
+</tr>
+<tr class="odd">
+<td>13</td>
+<td>Weighted-SSDU</td>
+<td>33.03</td>
+<td>.8991</td>
+</tr>
+<tr class="even">
+<td>14</td>
+<td>(Supervised)</td>
+<td>33.89</td>
+<td>.9147</td>
+</tr>
+</tbody>
+</table>
+<p><img src="img/results_brain_multicoil.png" class="img-fluid"></p>
+</details>
 <hr>
 </section>
 <section id="training-script-step-by-step" class="level2">
