@@ -152,7 +152,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><a href="https://andrewwango.github.io">Andrew Wang</a>, <a href="https://smcdonagh.github.io/">Steven McDonagh</a>, <a href="https://eng.ed.ac.uk/about/people/professor-michael-e-davies">Mike Davies</a></p>
 <p><a href="https://arxiv.org/abs/2502.14009"><img src="https://img.shields.io/badge/arXiv-2502.14009-b31b1b.svg" class="img-fluid" alt="arXiv"></a> <a href="https://github.com/Andrewwango/ssibench"><img src="https://img.shields.io/badge/GitHub-Code-blue.svg" class="img-fluid" alt="Code"></a> <a href="https://andrewwango.github.io/ssibench"><img src="https://img.shields.io/badge/Web-Benchmark-ff69b4.svg" class="img-fluid" alt="Benchmark"></a> <a href="https://colab.research.google.com/drive/15CFQ7Lp9Xk-J3ltJ6kWHIs5tk8Z4VBYD?usp=sharing"><img src="https://colab.research.google.com/assets/colab-badge.svg" class="img-fluid" alt="Colab"></a></p>
 <hr>
-<p><img src="img/ssibench.svg" class="img-fluid"></p>
+<p><img src="img/ssibench_andrew.svg" class="img-fluid"></p>
 <p>Skip to…</p>
 <ol type="1">
 <li><a href="#overview">Overview</a></li>
@@ -198,7 +198,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <ol start="3" type="1">
 <li>Install <a href="https://deepinv.github.io/">DeepInverse</a></li>
 </ol>
-<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install deepinv</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install deepinv   <span class="co"># Stable</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install git+https://github.com/deepinv/deepinv.git#egg=deepinv   <span class="co"># Nightly</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <ol start="4" type="1">
 <li>Prepare your <a href="https://fastmri.med.nyu.edu/">fastMRI</a> data using the <a href="#dataset-preparation-instructions">below instructions</a>.</li>
 </ol>
@@ -393,7 +394,7 @@ Scenario 1 (single-coil)
 </tr>
 <tr class="odd">
 <td>13</td>
-<td>MO-EI (ours)</td>
+<td>MO-EI</td>
 <td>32.14</td>
 <td>.8846</td>
 </tr>
@@ -555,7 +556,7 @@ Scenario 3 (single-operator)
 </tr>
 <tr class="odd">
 <td>11</td>
-<td>MO-EI (ours)</td>
+<td>MO-EI</td>
 <td>31.11</td>
 <td>.8713</td>
 </tr>
@@ -645,7 +646,7 @@ Scenario 4 (multi-coil)
 </tr>
 <tr class="odd">
 <td>9</td>
-<td>MO-EI (ours)</td>
+<td>MO-EI</td>
 <td>31.56</td>
 <td>.8836</td>
 </tr>

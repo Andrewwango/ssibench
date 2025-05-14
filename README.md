@@ -11,7 +11,7 @@
 
 ---
 
-![](img/ssibench.svg)
+![](img/ssibench_andrew.svg)
 
 Skip to...
 
