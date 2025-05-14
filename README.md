@@ -196,9 +196,10 @@ We provide a live leaderboard for each experimental scenario described in [the p
 | 4 | ENSURE | 26.29 | .5856 |
 | 5 | Robust-SSDU | 27.42 | .6159 |
 | 6 | Noise2Recon-SSDU | 27.84 | .7661 |
-| 7 | Robust-EI | 29.07 | .8227 |
-| 8 | Robust-MO-EI | 29.72 | .8409 |
-| 9 | (Supervised) | 30.19 | .8411 |
+| 7 | DDSSL | 28.25 |.7836|
+| 8 | Robust-EI | 29.07 | .8227 |
+| 9 | Robust-MO-EI | 29.72 | .8409 |
+| 10 | (Supervised) | 30.19 | .8411 |
 
 ![](img/results_brain_noisy.png)
 
