@@ -159,7 +159,7 @@ match args.loss:
     case "robust-ssdu":
         split_generator = dinv.physics.generator.GaussianMaskGenerator(img_size=img_size, acceleration=2, center_fraction=0., rng=rng, device=device)
         mask_generator = dinv.physics.generator.MultiplicativeSplittingMaskGenerator((1, *img_size), split_generator, device=device)
-        loss = dinv.loss.mri.RobustSplittingLoss(mask_generator, physics_generator, dinv.physics.GaussianNoise(sigma=sigma, rng=torch.Generator(device).manual_seed(42)))
+        loss = dinv.loss.mri.RobustSplittingLoss(mask_generator, physics_generator, dinv.physics.GaussianNoise(sigma=sigma, rng=rng))
     
     case "noise2recon-ssdu":
         split_generator = dinv.physics.generator.GaussianMaskGenerator(img_size=img_size, acceleration=2, center_fraction=0., rng=rng, device=device)
@@ -169,6 +169,12 @@ match args.loss:
             dinv.loss.AugmentConsistencyLoss(dinv.transform.RandomNoise(sigma=(sigma * 0.5, sigma * 2), rng=rng), dinv.transform.Identity(), no_grad=False)
         ]
     
+    case "ddssl":
+        loss = [
+            dinv.loss.R2RLoss(noise_model=dinv.physics.GaussianNoise(sigma=sigma, rng=rng), alpha=0.5),
+            dinv.loss.EILoss(dinv.transform.RandomNoise(sigma=sigma, rng=rng), apply_noise=False)
+        ]
+
     case "robust-ei":
         loss = [dinv.loss.SureGaussianLoss(sigma=sigma), dinv.loss.EILoss(transform=dinv.transform.Rotate())]
 
