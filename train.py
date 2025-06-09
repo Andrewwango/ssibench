@@ -154,7 +154,7 @@ match args.loss:
         ]
 
     case "ensure":
-        loss = ENSURELoss(sigma=sigma, physics_generator=physics_generator)
+        loss = dinv.loss.mri.ENSURELoss(sigma=sigma, physics_generator=physics_generator)
 
     case "robust-ssdu":
         split_generator = dinv.physics.generator.GaussianMaskGenerator(img_size=img_size, acceleration=2, center_fraction=0., rng=rng, device=device)
