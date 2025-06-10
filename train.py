@@ -12,6 +12,7 @@ parser.add_argument("--loss", type=str, default="mc", choices=(
     "vortex", "ei", "moi", "moc-ssdu", "mo-ei",
     "ensure", "noise2recon-ssdu", "robust-ssdu", "robust-ei", "robust-mo-ei",
     # Add your custom loss here!
+    "custom_loss",
 ))
 parser.add_argument("--physics", type=str, default="mri", choices=(
     "mri",       # Scenario 1: Noiseless single-coil
@@ -181,9 +182,9 @@ match args.loss:
     case "robust-mo-ei":
         loss = [dinv.loss.SureGaussianLoss(sigma=sigma), dinv.loss.MOEILoss(transform=dinv.transform.CPABDiffeomorphism(device=device), physics_generator=physics_generator)]
     
-    case "...":
+    case "custom_loss":
         # Add your custom loss here!
-        pass
+        loss = YourOwnLoss()
 
 # Define metrics
 metrics = [
