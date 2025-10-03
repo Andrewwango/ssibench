@@ -130,7 +130,7 @@ class YourOwnModel(deepinv.models.Reconstructor):
 
 ### How to use a custom forward operator/acquisition strategy
 
-1. To use an alternative physics, you can use a different off-the-shelf [DeepInverse physics](https://deepinv.github.io/deepinv/user_guide/physics/physics.html) or a custom one of the form (see [DeepInverse guide](https://deepinv.github.io/deepinv/user_guide/physics/defining.html) on creating custom physics):
+1. To use an alternative physics, you can use a different off-the-shelf [DeepInverse physics](https://deepinv.github.io/deepinv/user_guide/physics/physics.html) or a custom one of the form (see [DeepInverse guide](https://deepinv.github.io/deepinv/auto_examples/basics/demo_custom_physics.html) on creating custom physics):
 ```python
 class YourOwnPhysics(deepinv.physics.Physics):
     def A(self, x: torch.Tensor, **kwargs):
