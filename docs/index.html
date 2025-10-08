@@ -271,7 +271,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="how-to-use-a-custom-forward-operatoracquisition-strategy" class="level3">
 <h3 class="anchored" data-anchor-id="how-to-use-a-custom-forward-operatoracquisition-strategy">How to use a custom forward operator/acquisition strategy</h3>
 <ol type="1">
-<li>To use an alternative physics, you can use a different off-the-shelf <a href="https://deepinv.github.io/deepinv/user_guide/physics/physics.html">DeepInverse physics</a> or a custom one of the form (see <a href="https://deepinv.github.io/deepinv/user_guide/physics/defining.html">DeepInverse guide</a> on creating custom physics):</li>
+<li>To use an alternative physics, you can use a different off-the-shelf <a href="https://deepinv.github.io/deepinv/user_guide/physics/physics.html">DeepInverse physics</a> or a custom one of the form (see <a href="https://deepinv.github.io/deepinv/auto_examples/basics/demo_custom_physics.html">DeepInverse guide</a> on creating custom physics):</li>
 </ol>
 <div class="sourceCode" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> YourOwnPhysics(deepinv.physics.Physics):</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> A(<span class="va">self</span>, x: torch.Tensor, <span class="op">**</span>kwargs):</span>
